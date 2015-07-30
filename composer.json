@@ -1,0 +1,21 @@
+{
+  "name": "opilo/farsi",
+  "description": "Farsi Tools for PHP developers",
+  "authors": [
+    {
+      "name": "Hamid Alaei V.",
+      "email": "hamid@opilo.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.5.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "4.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Opilo\\Farsi\\": "src/"
+    }
+  }
+}
