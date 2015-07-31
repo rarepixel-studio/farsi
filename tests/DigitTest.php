@@ -18,14 +18,14 @@ class DigitTest extends PHPUnit_Framework_TestCase
         $this->converter = new DigitConverter();
     }
 
-    public function testConvertStringToFarsi()
+    public function test_convert_string_to_Farsi()
     {
         $this->assertEquals('۰۹۱۳۴۱۰۷۶۷۲' ,$this->converter->toFarsi('09134107672'));
         $this->assertEquals('۰۹۱۳۴۱۰۷۶۷۲' ,$this->converter->toFarsi('091341۰7672'));
         $this->assertEquals('۰۹۱۳۴۱۰۷۶۷۲abcd' ,$this->converter->toFarsi('091341۰7672abcd'));
     }
 
-    public function testConvertStringToEnglish()
+    public function test_convert_string_to_English()
     {
         $this->assertEquals('09134107672',$this->converter->toEnglish('۰۹۱۳۴۱۰۷۶۷۲'));
         $this->assertEquals('09134107672' ,$this->converter->toEnglish('۰۹۱۳۴۱0۷۶۷۲'));
