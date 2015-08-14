@@ -189,17 +189,14 @@ class JalaliDate extends Date
         }
 
         /** @var static $lower last 5-leap year*/
-        $lower = new static(static::$fiveLeapYears[$i - 1], 12, 30);
-        $delta1 = $nDays - $lower->toInteger();
+        $lower = new static(static::$fiveLeapYears[$i - 1] + 1, 1, 1);
+        $delta1 = $nDays - $lower->toInteger() + 1;
 
         /** @var static $lower last leap year*/
-        $lower = new static($lower->getYear() + 4 * (int)($delta1 / (4 * 365 + 1)), 12, 30);
-        $delta1 = $nDays - $lower->toInteger();
+        $lower = new static($lower->getYear() + 4 * (int)($delta1 / (4 * 365 + 1)), 1, 1);
+        $delta1 = $nDays - $lower->toInteger() + 1;
 
-        if(!$delta1) {
-            return $lower;
-        }
-        $year = $lower->getYear() + ceil($delta1 / 365);
+        $year = $lower->getYear() - 1 + ceil($delta1 / 365);
         $lower = new static($year, 1, 1);
         $delta1 = $nDays - $lower->toInteger() + 1;
         $month = MiscHelpers::binarySearch($delta1, static::$cumulativeDaysInMonth);

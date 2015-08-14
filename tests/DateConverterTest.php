@@ -187,4 +187,9 @@ class DateConverterTest extends \PHPUnit_Framework_TestCase
         $this->_test_convert_DateTime_to_JalaliDate($date, $y, 1, 1);
     }
 
+    public function test_convert_to_day_1()
+    {
+        $this->_test_convert_DateTime_to_JalaliDate('622-3-22', 1, 1, 1);
+    }
+
 }
