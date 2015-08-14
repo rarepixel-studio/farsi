@@ -75,8 +75,11 @@ class NumberToStringTest extends PHPUnit_Framework_TestCase
             [321234567890, 'سیصد و بیست و یک میلیارد و دویست و سی و چهار میلیون و پانصد و شصت و هفت هزار و هشتصد و نود'],
         ];
     }
+
     /**
      * @dataProvider provider
+     * @param $intNum
+     * @param $strNum
      */
     public function testNumbersToString($intNum, $strNum)
     {
