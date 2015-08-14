@@ -151,91 +151,57 @@ class JalaliDate extends Date
         INF
     ];
 
-    protected static $leapYearsBeforeFiveLeapYears = [
-        0,
-        1,
-        8,
-        14,
-        21,
-        28,
-        35,
-        42,
-        49,
-        56,
-        63,
-        69,
-        76,
-        83,
-        90,
-        97,
-        104,
-        111,
-        117,
-        124,
-        131,
-        139,
-        145,
-        152,
-        159,
-        166,
-        173,
-        180,
-        187,
-        194,
-        201,
-        207,
-        214,
-        221,
-        228,
-        235,
-        242,
-        249,
-        256,
-        262,
-        270,
-        277,
-        284,
-        290,
-        297,
-        304,
-        312,
-        INF,
-    ];
-
     public static function fromInteger($nDays)
     {
         $i = MiscHelpers::binarySearch($nDays, static::$fiveLeapYearsToInt);
 
-        $year = static::$fiveLeapYears[$i];
+        /** @var static $upper upper-bound*/
+        $upper = new static(static::$fiveLeapYears[$i], 12, 30);
+        /** @var int $delta2 the difference between upper-bound ($upper) and the input ($nDays) in days*/
+        $delta2 = $upper->toInteger() - $nDays;
 
-        $lastFiveLeapYear = new static($year, 12, 30);
-
-        if($nDays == static::$fiveLeapYearsToInt[$i]) {
-            return $lastFiveLeapYear;
+        if(! $delta2) {
+            return $upper;
         }
 
-        $delta = $nDays - $lastFiveLeapYear->toInteger();
-
-        $normalLeapsAfterLastFiveLeapYear = (int)($delta / (4 * 365 + 1));
-
-        $year += $normalLeapsAfterLastFiveLeapYear * 4;
-
-        $delta -= $normalLeapsAfterLastFiveLeapYear * (4 * 365 + 1);
-
-        if($nDays + 366 > static::$fiveLeapYearsToInt[$i + 1]) {
-            $delta++;
-        } elseif($nDays + 366 == static::$fiveLeapYearsToInt[$i + 1]) {
-            return new static(static::$fiveLeapYears[$i + 1], 1, 1);
+        if($delta2 <= 365) {
+            $year = $upper->getYear();
+            /** @var static $lower lower-bound */
+            $lower = new static($year - 1, 12, 29);
+            /** @var int $delta1 the difference between the input ($nDays) and lower-bound ($lower) in days */
+            $delta1 = $nDays - $lower->toInteger();
+            $month = MiscHelpers::binarySearch($delta1, static::$cumulativeDaysInMonth);
+            $day = $delta1 - static::$cumulativeDaysInMonth[$month - 1];
+            return new static($year, $month, $day);
         }
 
-        $year += ceil(($delta + 1) / 365);
+        if($delta2 <= 5 * 365) {
+            $lower = new static($upper->getYear() - 5, 12, 30);
+            $delta1 = $nDays - $lower->toInteger();
+            $year =  $lower->getYear() + ceil($delta1 / 365);
+            $lower = new static($year, 1, 1);
+            $delta1 = $nDays - $lower->toInteger() + 1;
+            $month = MiscHelpers::binarySearch($delta1, static::$cumulativeDaysInMonth);
+            $day = $delta1 - static::$cumulativeDaysInMonth[$month - 1];
+            return new static($year, $month, $day);
+        }
 
-        $delta -= 365 * (ceil(($delta + 1) / 365) - 1);
+        /** @var static $lower last 5-leap year*/
+        $lower = new static(static::$fiveLeapYears[$i - 1], 12, 30);
+        $delta1 = $nDays - $lower->toInteger();
 
-        $month = MiscHelpers::binarySearch($delta + 1, static::$cumulativeDaysInMonth);
+        /** @var static $lower last leap year*/
+        $lower = new static($lower->getYear() + 4 * (int)($delta1 / (4 * 365 + 1)), 12, 30);
+        $delta1 = $nDays - $lower->toInteger();
 
-        $day = $delta - static::$cumulativeDaysInMonth[$month - 1] + 1;
-
+        if(!$delta1) {
+            return $lower;
+        }
+        $year = $lower->getYear() + ceil($delta1 / 365);
+        $lower = new static($year, 1, 1);
+        $delta1 = $nDays - $lower->toInteger() + 1;
+        $month = MiscHelpers::binarySearch($delta1, static::$cumulativeDaysInMonth);
+        $day = $delta1 - static::$cumulativeDaysInMonth[$month - 1];
         return new static($year, $month, $day);
     }
 
@@ -281,12 +247,10 @@ class JalaliDate extends Date
 
     protected function numberOfLeapYearsPast()
     {
-        $y = $this->getYear() - 1;
-        $fives = MiscHelpers::binarySearch($y, static::$fiveLeapYears) - 1;
-        $n = (int)(($y - $fives) / 4);
-        if(static::$fiveLeapYears[$fives + 1] == $y + 1) {
-            $n--;
-        }
-        return $n;
+        $y = $this->getYear();
+
+        /** @var int $nHops number of 365-day-years followed a five-leap-year*/
+        $nHops = MiscHelpers::binarySearch($y + 1, static::$fiveLeapYears);
+        return (int)(($y - $nHops) / 4);
     }
 }
