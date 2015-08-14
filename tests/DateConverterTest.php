@@ -1,7 +1,6 @@
 <?php
 namespace OpiloTest\Farsi;
 
-
 use Opilo\Farsi\DateConverter;
 use Opilo\Farsi\JalaliDate;
 
@@ -190,6 +189,29 @@ class DateConverterTest extends \PHPUnit_Framework_TestCase
     public function test_convert_to_day_1()
     {
         $this->_test_convert_DateTime_to_JalaliDate('622-3-22', 1, 1, 1);
+    }
+
+    public function test_convert_to_farthest_supported_day_in_future()
+    {
+        list($y, $m, $d) = JalaliDate::$farthestSupportedDate;
+        $this->_test_convert_DateTime_to_JalaliDate('2100-3-20', $y, $m, $d);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function test_convert_to_days_after_farthest_supported_day_fails()
+    {
+        list($y, $m, $d) = JalaliDate::$farthestSupportedDate;
+        $this->_test_convert_DateTime_to_JalaliDate('2100-3-21', $y + 1, 1, 1);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function test_convert_to_days_before_day_one_fails()
+    {
+        $this->_test_convert_DateTime_to_JalaliDate('622-3-21', 0, 12, 30);
     }
 
 }

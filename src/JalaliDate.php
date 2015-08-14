@@ -14,6 +14,11 @@ use InvalidArgumentException;
  */
 class JalaliDate extends Date
 {
+    /**
+     * @var array
+     * Dates after this constant is not supported (due to the lack of data)
+     */
+    public static $farthestSupportedDate = [1478, 12, 30];
 
     protected static $cumulativeDaysInMonth = [
         0,
