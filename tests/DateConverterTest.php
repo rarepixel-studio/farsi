@@ -193,8 +193,8 @@ class DateConverterTest extends \PHPUnit_Framework_TestCase
 
     public function test_convert_to_farthest_supported_day_in_future()
     {
-        list($y, $m, $d) = JalaliDate::$farthestSupportedDate;
-        $this->_test_convert_DateTime_to_JalaliDate('2100-3-20', $y, $m, $d);
+        $farthest = JalaliDate::getFarthestSupportedDate();
+        $this->_test_convert_DateTime_to_JalaliDate('2100-3-20', $farthest->getYear(), $farthest->getMonth(), $farthest->getDay());
     }
 
     /**
@@ -202,8 +202,8 @@ class DateConverterTest extends \PHPUnit_Framework_TestCase
      */
     public function test_convert_to_days_after_farthest_supported_day_fails()
     {
-        list($y, $m, $d) = JalaliDate::$farthestSupportedDate;
-        $this->_test_convert_DateTime_to_JalaliDate('2100-3-21', $y + 1, 1, 1);
+        $farthest = JalaliDate::getFarthestSupportedDate();
+        $this->_test_convert_DateTime_to_JalaliDate('2100-3-21', $farthest->getYear() + 1, 1, 1);
     }
 
     /**

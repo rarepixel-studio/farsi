@@ -18,7 +18,7 @@ class JalaliDate extends Date
      * @var array
      * Dates after this constant is not supported (due to the lack of data)
      */
-    public static $farthestSupportedDate = [1478, 12, 30];
+    protected static $farthestSupportedDate = [1478, 12, 30];
 
     protected static $cumulativeDaysInMonth = [
         0,
@@ -207,6 +207,25 @@ class JalaliDate extends Date
         $month = MiscHelpers::binarySearch($delta1, static::$cumulativeDaysInMonth);
         $day = $delta1 - static::$cumulativeDaysInMonth[$month - 1];
         return new static($year, $month, $day);
+    }
+
+    /**
+     * @return static
+     * Dates after this constant is not supported (due to the lack of data)
+     */
+    public static function getFarthestSupportedDate()
+    {
+        list($y, $m, $d) = static::$farthestSupportedDate;
+        return new static($y, $m, $d);
+    }
+
+    /**
+     * @param int $month
+     * @return int
+     */
+    public static function getDaysInMonth($month)
+    {
+        return self::$daysInMonth[$month - 1];
     }
 
     /**
