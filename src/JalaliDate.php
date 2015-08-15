@@ -253,9 +253,19 @@ class JalaliDate extends Date
     /**
      * @return int 0 (for Saturday) through 6 (for Friday)
      */
-    public function getWeakDay()
+    public function getWeekDay()
     {
         return ($this->toInteger() + 5) % 7;
+    }
+
+    /**
+     * @return int (e.g. 42 for the 42nd week of the year)
+     */
+    public function getWeekOfYear()
+    {
+        $n = $this->dayOfYear();
+        $f = (new static($this->getYear(), 1, 1))->getWeekDay();
+        return (int)(($n - 1 + $f) / 7) + 1;
     }
 
     /**

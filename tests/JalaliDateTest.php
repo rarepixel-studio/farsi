@@ -364,7 +364,35 @@ class JalaliDateTest extends PHPUnit_Framework_TestCase
      */
     public function test_day_of_week($y, $m, $d, $w)
     {
-        $this->assertEquals((new JalaliDate($y, $m, $d))->getWeakDay(), $w);
+        $this->assertEquals((new JalaliDate($y, $m, $d))->getWeekDay(), $w);
+    }
+
+    public function weekOfYear()
+    {
+        return [
+            [1394, 1, 1, 1],
+            [1394, 1, 7, 1],
+            [1394, 1, 8, 2],
+            [1394, 1, 14, 2],
+
+            [1396, 1, 1, 1],
+            [1396, 1, 4, 1],
+            [1396, 1, 5, 2],
+            [1396, 1, 11, 2],
+
+        ];
+    }
+
+    /**
+     * @param $y
+     * @param $m
+     * @param $d
+     * @param $w
+     * @dataProvider weekOfYear
+     */
+    public function testWeekOfYear($y, $m, $d, $w)
+    {
+        $this->assertEquals((new JalaliDate($y, $m, $d))->getWeekOfYear(), $w);
     }
 
     public function _testS()

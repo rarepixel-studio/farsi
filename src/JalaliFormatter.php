@@ -20,8 +20,10 @@ class JalaliFormatter
         'y' => 'get2DigitYear',
         'X' => 'getYearString',
         'x' => 'get2DigitYearString',
-        'w' => 'getWeakDay',
-        'D' => 'getWeakDayName',
+        'w' => 'getWeekDay',
+        'D' => 'getWeekDayName',
+        'W' => 'getWeekOfYearString',
+        'V' => 'getWeekOfYear',
     ];
 
     protected static $monthNames = [
@@ -126,13 +128,22 @@ class JalaliFormatter
         return NumberToStringConverter::toString($date->getYear() % 100);
     }
 
-    protected static function getWeakDay(JalaliDate $date)
+    protected static function getWeekDay(JalaliDate $date)
     {
-        return (string) $date->getWeakDay();
+        return (string) $date->getWeekDay();
     }
 
-    protected static function getWeakDayName(JalaliDate $date)
+    protected static function getWeekDayName(JalaliDate $date)
     {
-        return static::$weekDays[$date->getWeakDay()];
+        return static::$weekDays[$date->getWeekDay()];
+    }
+
+    protected static function getWeekOfYearString(JalaliDate $date)
+    {
+        return NumberToStringConverter::toOrdinalString($date->getWeekOfYear());
+    }
+    protected static function getWeekOfYear(JalaliDate $date)
+    {
+        return (string) $date->getWeekOfYear();
     }
 }
