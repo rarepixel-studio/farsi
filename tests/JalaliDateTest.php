@@ -2,6 +2,7 @@
 namespace OpiloTest\Farsi;
 
 use Opilo\Farsi\JalaliDate;
+use Opilo\Farsi\JalaliFormatter;
 use PHPUnit_Framework_TestCase;
 
 class JalaliDateTest extends PHPUnit_Framework_TestCase
@@ -338,6 +339,32 @@ class JalaliDateTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(94, (new JalaliDatePublicized(389, 1, 1))->publicNumberOfLeapYearsPast());
         $this->assertEquals(95, (new JalaliDatePublicized(393, 1, 1))->publicNumberOfLeapYearsPast());
         $this->assertEquals(96, (new JalaliDatePublicized(398, 1, 1))->publicNumberOfLeapYearsPast());
+    }
+
+    public function dayOfWeek()
+    {
+        return [
+            [1, 1, 1, 6],
+            [1394, 5, 24, 0],
+            [1395, 5, 3, 1],
+            [1396, 5, 2, 2],
+            [1397, 5, 2, 3],
+            [1398, 5, 2, 4],
+            [1399, 5, 2, 5],
+            [1400, 5, 1, 6],
+        ];
+    }
+
+    /**
+     * @param $y
+     * @param $m
+     * @param $d
+     * @param $w
+     * @dataProvider dayOfWeek
+     */
+    public function test_day_of_week($y, $m, $d, $w)
+    {
+        $this->assertEquals((new JalaliDate($y, $m, $d))->getWeakDay(), $w);
     }
 
     public function _testS()

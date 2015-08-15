@@ -251,6 +251,14 @@ class JalaliDate extends Date
     }
 
     /**
+     * @return int 0 (for Saturday) through 6 (for Friday)
+     */
+    public function getWeakDay()
+    {
+        return ($this->toInteger() + 5) % 7;
+    }
+
+    /**
      * Validates the constructed date
      * @return void
      * @throws InvalidArgumentException

@@ -17,10 +17,16 @@ class JalaliFormatter
         'L' => 'isLeapYear',
         'Y' => 'getYear',
         'y' => 'get2DigitYear',
+        'w' => 'getWeakDay',
+        'D' => 'getWeakDayName',
     ];
 
     protected static $monthNames = [
         'فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'
+    ];
+
+    protected static $weekDays = [
+        'شنبه', 'یک‌شنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنج‌شنبه', 'جمعه'
     ];
 
     /**
@@ -57,7 +63,7 @@ class JalaliFormatter
 
     protected static function getDayOfYear(JalaliDate $date)
     {
-        return $date->dayOfYear();
+        return (string) $date->dayOfYear();
     }
 
     protected static function get2DigitMonth(JalaliDate $date)
@@ -78,7 +84,7 @@ class JalaliFormatter
 
     protected static function getNumberOfDaysInMonth(JalaliDate $date)
     {
-        return JalaliDate::getDaysInMonth($date->getMonth());
+        return (string) JalaliDate::getDaysInMonth($date->getMonth());
     }
 
     protected static function isLeapYear(JalaliDate $date)
@@ -88,12 +94,22 @@ class JalaliFormatter
 
     protected static function getYear(JalaliDate $date)
     {
-        return $date->getYear();
+        return (string) $date->getYear();
     }
 
     protected static function get2DigitYear(JalaliDate $date)
     {
         $year = $date->getYear() % 100;
         return strlen($year) == 1 ? '0' . $year : $year;
+    }
+
+    protected static function getWeakDay(JalaliDate $date)
+    {
+        return (string) $date->getWeakDay();
+    }
+
+    protected static function getWeakDayName(JalaliDate $date)
+    {
+        return static::$weekDays[$date->getWeakDay()];
     }
 }
