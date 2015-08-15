@@ -16,7 +16,7 @@ class NumberToStringConverter
 
     /**
      * @param int $number
-     * @return string
+     * @return string e.g.: یک، دو، سه، چهار، ...
      */
     public static function toString($number)
     {
@@ -74,5 +74,16 @@ class NumberToStringConverter
             $strNum = static::$negative . ' ' . $strNum;
         }
         return $strNum;
+    }
+
+    /**
+     * @param int $number
+     * @return string e.g.: یکم، دوم، سوم، چهارم، ...
+     */
+    public static function toOrdinalString($number)
+    {
+        $output = static::toString($number);
+        $output = preg_replace('/سه$/', 'سو', $output);
+        return $output . 'م';
     }
 }

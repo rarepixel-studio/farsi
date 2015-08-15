@@ -76,6 +76,29 @@ class NumberToStringTest extends PHPUnit_Framework_TestCase
         ];
     }
 
+    public function ordinalProvider()
+    {
+        return [
+            [1, 'یکم'],
+            [5, 'پنجم'],
+            [10, 'دهم'],
+            [33, 'سی و سوم'],
+            [19, 'نوزدهم'],
+            [110, 'یکصد و دهم'],
+            [2000, 'دو هزارم'],
+        ];
+    }
+
+    /**
+     * @param $intNum
+     * @param $strNum
+     * @dataProvider ordinalProvider
+     */
+    public function testNumbersToOrdinalStrings($intNum, $strNum)
+    {
+        $this->assertEquals($strNum, $this->converter->toOrdinalString($intNum));
+    }
+
     /**
      * @dataProvider provider
      * @param $intNum

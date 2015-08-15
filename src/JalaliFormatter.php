@@ -9,6 +9,7 @@ class JalaliFormatter
     protected static $conversionFunctions = [
         'd' => 'get2DigitDay',
         'j' => 'getDay',
+        'S' => 'getDayString',
         'z' => 'getDayOfYear',
         'm' => 'get2DigitMonth',
         'M' => 'getMonthName',
@@ -17,6 +18,8 @@ class JalaliFormatter
         'L' => 'isLeapYear',
         'Y' => 'getYear',
         'y' => 'get2DigitYear',
+        'X' => 'getYearString',
+        'x' => 'get2DigitYearString',
         'w' => 'getWeakDay',
         'D' => 'getWeakDayName',
     ];
@@ -66,6 +69,11 @@ class JalaliFormatter
         return (string) $date->getDay();
     }
 
+    public static function getDayString(JalaliDate $date)
+    {
+        return NumberToStringConverter::toOrdinalString($date->getDay());
+    }
+
     protected static function getDayOfYear(JalaliDate $date)
     {
         return (string) $date->dayOfYear();
@@ -106,6 +114,16 @@ class JalaliFormatter
     {
         $year = $date->getYear() % 100;
         return strlen($year) == 1 ? '0' . $year : $year;
+    }
+
+    protected static function getYearString(JalaliDate $date)
+    {
+        return NumberToStringConverter::toString($date->getYear());
+    }
+
+    protected static function get2DigitYearString(JalaliDate $date)
+    {
+        return NumberToStringConverter::toString($date->getYear() % 100);
     }
 
     protected static function getWeakDay(JalaliDate $date)
