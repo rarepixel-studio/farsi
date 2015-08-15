@@ -32,9 +32,10 @@ class JalaliFormatter
     /**
      * @param JalaliDate $date
      * @param string $format
+     * @param bool $farsiDigits whether to convert english digits to farsi
      * @return string
      */
-    public static function JalaliToString(JalaliDate $date, $format)
+    public static function JalaliToString(JalaliDate $date, $format, $farsiDigits = true)
     {
         $output = '';
         $funcitons = str_split($format);
@@ -45,6 +46,10 @@ class JalaliFormatter
             } else {
                 $output .= $function;
             }
+        }
+
+        if($farsiDigits) {
+            $output = DigitConverter::toFarsi($output);
         }
 
         return $output;
