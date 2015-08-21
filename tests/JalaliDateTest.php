@@ -2,7 +2,6 @@
 namespace OpiloTest\Farsi;
 
 use Opilo\Farsi\JalaliDate;
-use Opilo\Farsi\JalaliFormatter;
 use PHPUnit_Framework_TestCase;
 
 class JalaliDateTest extends PHPUnit_Framework_TestCase

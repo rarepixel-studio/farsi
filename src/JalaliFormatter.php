@@ -60,7 +60,7 @@ class JalaliFormatter
         }
 
         if($farsiDigits) {
-            $output = DigitConverter::toFarsi($output);
+            $output = StringCleaner::digitsToFarsi($output);
         }
 
         return $output;
