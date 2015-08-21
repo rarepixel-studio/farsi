@@ -243,6 +243,21 @@ class JalaliDate extends Date
     }
 
     /**
+     * @param string $format
+     * @param bool $farsiDigits
+     * @return JalaliDate
+     */
+    public function format($format, $farsiDigits = true)
+    {
+        return JalaliFormatter::JalaliToString($this, $format, $farsiDigits);
+    }
+
+    public function isInLeapYear()
+    {
+        return static::isLeapYear($this->getYear());
+    }
+
+    /**
      * @return int the rank of day in the current year
      */
     public function dayOfYear()
@@ -280,7 +295,7 @@ class JalaliDate extends Date
         $m = $this->getMonth();
 
         if($d > static::$daysInMonth[$m - 1]) {
-            if(!($m == 12 && $d == 30 && static::isLeapYear($this->getYear()))) {
+            if(!($m == 12 && $d == 30 && $this->isInLeapYear())) {
                 throw new InvalidArgumentException();
             }
         }

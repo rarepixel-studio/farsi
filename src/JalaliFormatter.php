@@ -104,7 +104,7 @@ class JalaliFormatter
 
     protected static function isLeapYear(JalaliDate $date)
     {
-        return JalaliDate::isLeapYear($date->getYear()) ? '1' : '0';
+        return $date->isInLeapYear() ? '1' : '0';
     }
 
     protected static function getYear(JalaliDate $date)

@@ -395,6 +395,12 @@ class JalaliDateTest extends PHPUnit_Framework_TestCase
         $this->assertEquals((new JalaliDate($y, $m, $d))->getWeekOfYear(), $w);
     }
 
+    public function testFormat()
+    {
+        $this->assertEquals('94/5/30', (new JalaliDate(1394, 5, 30))->format('y/n/d', false));
+        $this->assertEquals('۱۳۹۴/۰۵/۳۰', (new JalaliDate(1394, 5, 30))->format('Y/m/d', true));
+    }
+
     public function _testS()
     {
         JalaliDatePublicized::printLastDayOfFileYearLeaps();
