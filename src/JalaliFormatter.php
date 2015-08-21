@@ -43,9 +43,15 @@ class JalaliFormatter
     public static function JalaliToString(JalaliDate $date, $format, $farsiDigits = true)
     {
         $output = '';
-        $funcitons = str_split($format);
-        foreach ($funcitons as $function) {
-            if(array_key_exists($function, static::$conversionFunctions)){
+        $functions = str_split($format);
+        $escaped = false;
+        foreach ($functions as $function) {
+            if($escaped) {
+                $output .= $function;
+                $escaped = false;
+            } else if($function === '\\') {
+                $escaped = true;
+            } else if(array_key_exists($function, static::$conversionFunctions)){
                 $f = static::$conversionFunctions[$function];
                 $output .= static::$f($date);
             } else {

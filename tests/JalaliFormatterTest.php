@@ -46,6 +46,9 @@ class JalaliFormatterTest extends PHPUnit_Framework_TestCase
             [1398, 5, 2, 'w:D', '4:چهارشنبه'],
             [1399, 5, 2, 'w:D', '5:پنج‌شنبه'],
             [1400, 5, 1, 'w:D', '6:جمعه'],
+
+            [1394, 5, 30, '\y\e\a\r: Y, \m\o\n\t\h: m, \d\a\y: d', 'year: 1394, month: 05, day: 30'],
+            [1394, 5, 30, "\\y\\e\\a\\r: Y, \\m\\o\\n\\t\\h: m, \\d\\a\\y: d", 'year: 1394, month: 05, day: 30'],
         ];
     }
 
