@@ -31,4 +31,25 @@ class DateConverter
         $firstDay = new GeorgianDate(622, 3, 22);
         return JalaliDate::fromInteger($georgian->toInteger() - $firstDay->toInteger() + 1);
     }
+
+    /**
+     * @param JalaliDate $jDate
+     * @return DateTime
+     */
+    public function jalaliToDateTime(JalaliDate $jDate)
+    {
+        $firstDay = (new GeorgianDate(622, 3, 22))->toInteger();
+        $nDays = $jDate->toInteger() + $firstDay;
+        $georgian = GeorgianDate::fromInteger($nDays);
+        return static::georgianToDateTime($georgian);
+    }
+
+    /**
+     * @param GeorgianDate $gDate
+     * @return DateTime
+     */
+    public static function georgianToDateTime(GeorgianDate $gDate)
+    {
+        return DateTime::createFromFormat('Y-m-d', $gDate->getYear() . '-' . $gDate->getMonth() . '-' . $gDate->getDay());
+    }
 }

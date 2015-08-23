@@ -26,7 +26,20 @@ class DateConverterTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($georgian->getDay(), 2);
     }
 
-    public function _test_convert_DateTime_to_JalaliDate($date, $y, $m, $d)
+    private function _test_2_Way_convertion($date, $y, $m, $d)
+    {
+        $this->_test_convert_DateTime_to_JalaliDate($date, $y, $m, $d);
+        $this->_test_convert_JalaliDate_to_DateTime($date, $y, $m, $d);
+    }
+
+    private function _test_convert_JalaliDate_to_DateTime($date, $y, $m, $d)
+    {
+        $dateTime = \DateTime::createFromFormat('Y-m-d', $date);
+        $converted = $this->converter->jalaliToDateTime(new JalaliDate($y, $m, $d));
+        $this->assertEquals($dateTime, $converted);
+    }
+
+    private function  _test_convert_DateTime_to_JalaliDate($date, $y, $m, $d)
     {
         $dateTime = \DateTime::createFromFormat('Y-m-d', $date);
         $jalali = $this->converter->dateTimeToJalali($dateTime);
@@ -55,7 +68,7 @@ class DateConverterTest extends \PHPUnit_Framework_TestCase
      */
     public function test_convert_last_day_of_five_leap_year_to_JalaliDate($date, $y)
     {
-        $this->_test_convert_DateTime_to_JalaliDate($date, $y, 12, 30);
+        $this->_test_2_Way_convertion($date, $y, 12, 30);
     }
 
     public function daysIn1375()
@@ -86,7 +99,7 @@ class DateConverterTest extends \PHPUnit_Framework_TestCase
      */
     public function test_convert_to_days_in_1375($date, $m, $d)
     {
-        $this->_test_convert_DateTime_to_JalaliDate($date, 1375, $m, $d);
+        $this->_test_2_Way_convertion($date, 1375, $m, $d);
     }
 
     public function daysInEarly1370s()
@@ -115,7 +128,7 @@ class DateConverterTest extends \PHPUnit_Framework_TestCase
      */
     public function test_convert_to_days_in_early_1370s($date, $y, $m, $d)
     {
-        $this->_test_convert_DateTime_to_JalaliDate($date, $y, $m, $d);
+        $this->_test_2_Way_convertion($date, $y, $m, $d);
     }
 
     public function daysIn1370()
@@ -137,7 +150,7 @@ class DateConverterTest extends \PHPUnit_Framework_TestCase
      */
     public function test_convert_to_days_in_1370($date, $m, $d)
     {
-        $this->_test_convert_DateTime_to_JalaliDate($date, 1370, $m, $d);
+        $this->_test_2_Way_convertion($date, 1370, $m, $d);
     }
 
     public function lastDayInANormalLeapYear()
@@ -160,7 +173,7 @@ class DateConverterTest extends \PHPUnit_Framework_TestCase
      */
     public function test_convert_to_the_last_day_in_a_normal_leap_year($date, $y)
     {
-        $this->_test_convert_DateTime_to_JalaliDate($date, $y, 12, 30);
+        $this->_test_2_Way_convertion($date, $y, 12, 30);
     }
 
     public function firstDayInANormalLeapYear()
@@ -183,18 +196,18 @@ class DateConverterTest extends \PHPUnit_Framework_TestCase
      */
     public function test_convert_to_the_first_day_in_a_normal_leap_year($date, $y)
     {
-        $this->_test_convert_DateTime_to_JalaliDate($date, $y, 1, 1);
+        $this->_test_2_Way_convertion($date, $y, 1, 1);
     }
 
     public function test_convert_to_day_1()
     {
-        $this->_test_convert_DateTime_to_JalaliDate('622-3-22', 1, 1, 1);
+        $this->_test_2_Way_convertion('622-3-22', 1, 1, 1);
     }
 
     public function test_convert_to_farthest_supported_day_in_future()
     {
         $farthest = JalaliDate::getFarthestSupportedDate();
-        $this->_test_convert_DateTime_to_JalaliDate('2100-3-20', $farthest->getYear(), $farthest->getMonth(), $farthest->getDay());
+        $this->_test_2_Way_convertion('2100-3-20', $farthest->getYear(), $farthest->getMonth(), $farthest->getDay());
     }
 
     /**
@@ -203,7 +216,7 @@ class DateConverterTest extends \PHPUnit_Framework_TestCase
     public function test_convert_to_days_after_farthest_supported_day_fails()
     {
         $farthest = JalaliDate::getFarthestSupportedDate();
-        $this->_test_convert_DateTime_to_JalaliDate('2100-3-21', $farthest->getYear() + 1, 1, 1);
+        $this->_test_2_Way_convertion('2100-3-21', $farthest->getYear() + 1, 1, 1);
     }
 
     /**
@@ -211,7 +224,7 @@ class DateConverterTest extends \PHPUnit_Framework_TestCase
      */
     public function test_convert_to_days_before_day_one_fails()
     {
-        $this->_test_convert_DateTime_to_JalaliDate('622-3-21', 0, 12, 30);
+        $this->_test_2_Way_convertion('622-3-21', 0, 12, 30);
     }
 
 }
