@@ -400,6 +400,13 @@ class JalaliDateTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('۱۳۹۴/۰۵/۳۰', (new JalaliDate(1394, 5, 30))->format('Y/m/d', true));
     }
 
+    public function testToDateTime()
+    {
+        $jDate = new JalaliDate(1394, 6, 1);
+        $dateTime = $jDate->toDateTime();
+        $this->assertEquals('2015-08-23', $dateTime->format('Y-m-d'));
+    }
+
     public function _testS()
     {
         JalaliDatePublicized::printLastDayOfFileYearLeaps();

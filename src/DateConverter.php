@@ -36,7 +36,7 @@ class DateConverter
      * @param JalaliDate $jDate
      * @return DateTime
      */
-    public function jalaliToDateTime(JalaliDate $jDate)
+    public static function jalaliToDateTime(JalaliDate $jDate)
     {
         $firstDay = (new GeorgianDate(622, 3, 22))->toInteger();
         $nDays = $jDate->toInteger() + $firstDay;

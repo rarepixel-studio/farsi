@@ -252,6 +252,11 @@ class JalaliDate extends Date
         return JalaliFormatter::JalaliToString($this, $format, $farsiDigits);
     }
 
+    public function toDateTime()
+    {
+        return DateConverter::jalaliToDateTime($this);
+    }
+
     public function isInLeapYear()
     {
         return static::isLeapYear($this->getYear());
