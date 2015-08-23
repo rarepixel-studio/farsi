@@ -1,4 +1,5 @@
 <?php
+
 namespace OpiloTest\Farsi;
 
 use Opilo\Farsi\NumberToStringConverter;
@@ -6,7 +7,6 @@ use PHPUnit_Framework_TestCase;
 
 class NumberToStringTest extends PHPUnit_Framework_TestCase
 {
-
     /**
      * @var NumberToStringConverter
      */
@@ -111,5 +111,4 @@ class NumberToStringTest extends PHPUnit_Framework_TestCase
             $this->assertEquals('منفی ' . $strNum, $this->converter->toString(-$intNum));
         }
     }
-
 }

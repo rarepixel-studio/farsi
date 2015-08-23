@@ -1,11 +1,11 @@
 <?php
+
 namespace Opilo\Farsi;
 
 use Doctrine\Instantiator\Exception\InvalidArgumentException;
 
 class GeorgianDate extends Date
 {
-
     protected static $cumulativeDaysInMonth = [
         0,
         31,

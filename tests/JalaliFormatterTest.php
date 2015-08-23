@@ -8,7 +8,6 @@ use PHPUnit_Framework_TestCase;
 
 class JalaliFormatterTest extends PHPUnit_Framework_TestCase
 {
-
     public function provideSamples()
     {
         return [
@@ -123,6 +122,4 @@ class JalaliFormatterTest extends PHPUnit_Framework_TestCase
     {
         $this->assertEquals($output, JalaliFormatter::JalaliToString(new JalaliDate($year, $month, $day), $format));
     }
-
-
 }

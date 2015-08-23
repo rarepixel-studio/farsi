@@ -1,10 +1,12 @@
 <?php
+
 namespace OpiloTest\Farsi;
 
 use Opilo\Farsi\GeorgianDate;
+use PHPUnit_Framework_TestCase;
 
-class GeorgianDateTest extends \PHPUnit_Framework_TestCase {
-
+class GeorgianDateTest extends PHPUnit_Framework_TestCase
+{
     public function test_day_of_year()
     {
         $this->assertSame(1, (new GeorgianDate(2000, 1, 1))->dayOfYear());

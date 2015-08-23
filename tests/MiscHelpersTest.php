@@ -1,4 +1,5 @@
 <?php
+
 namespace OpiloTest\Farsi;
 
 use Opilo\Farsi\MiscHelpers;

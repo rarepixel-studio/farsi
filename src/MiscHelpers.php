@@ -1,4 +1,5 @@
 <?php
+
 namespace Opilo\Farsi;
 
 class MiscHelpers
@@ -28,5 +29,4 @@ class MiscHelpers
 
         return $left;
     }
-
 }

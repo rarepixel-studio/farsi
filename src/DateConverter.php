@@ -1,11 +1,11 @@
 <?php
+
 namespace Opilo\Farsi;
 
 use DateTime;
 
 class DateConverter
 {
-
     /**
      * Converts a DateTime object to corresponding GeorgianDate object
      *

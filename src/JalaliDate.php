@@ -1,6 +1,8 @@
 <?php
+
 namespace Opilo\Farsi;
 
+use DateTime;
 use InvalidArgumentException;
 
 /**
@@ -252,11 +254,17 @@ class JalaliDate extends Date
         return JalaliFormatter::JalaliToString($this, $format, $farsiDigits);
     }
 
+    /**
+     * @return DateTime
+     */
     public function toDateTime()
     {
         return DateConverter::jalaliToDateTime($this);
     }
 
+    /**
+     * @return bool
+     */
     public function isInLeapYear()
     {
         return static::isLeapYear($this->getYear());

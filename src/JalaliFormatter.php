@@ -2,10 +2,8 @@
 
 namespace Opilo\Farsi;
 
-
 class JalaliFormatter
 {
-
     protected static $conversionFunctions = [
         'd' => 'get2DigitDay',
         'j' => 'getDay',

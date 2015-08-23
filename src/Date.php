@@ -1,6 +1,7 @@
 <?php
 
 namespace Opilo\Farsi;
+
 use InvalidArgumentException;
 
 /**
