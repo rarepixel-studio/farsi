@@ -1,6 +1,7 @@
 {
   "name": "opilo/farsi",
-  "description": "Farsi Tools for PHP developers",
+  "description": "Farsi Tools for Dates and Numbers and Strings",
+  "keywords": ["Jalali", "Shamsi", "Farsi", "Persian"],
   "authors": [
     {
       "name": "Hamid Alaei V.",
