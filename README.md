@@ -1,4 +1,10 @@
 # Opilo Farsi Tools
+
+[![Latest Stable Version](https://poser.pugx.org/opilo/farsi/v/stable)](https://packagist.org/packages/opilo/farsi)
+[![Total Downloads](https://poser.pugx.org/opilo/farsi/downloads)](https://packagist.org/packages/opilo/farsi)
+[![Latest Unstable Version](https://poser.pugx.org/opilo/farsi/v/unstable)](https://packagist.org/packages/opilo/farsi)
+[![License](https://poser.pugx.org/opilo/farsi/license)](https://packagist.org/packages/opilo/farsi)
+
 This package provides Farsi tools for PHP developers.
 ## Jalali (Higri Shamsi) Date
 The `JalaliDate` class represents Iranian calendar. It calculates leap years based on data referenced in [this wiki page](https://fa.wikipedia.org/wiki/گاه‌شماری_رسمی_ایران).
