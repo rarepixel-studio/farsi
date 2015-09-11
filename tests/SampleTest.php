@@ -2,7 +2,6 @@
 
 namespace OpiloTest\Farsi;
 
-use Opilo\Farsi\DateConverter;
 use Opilo\Farsi\JalaliDate;
 use Opilo\Farsi\NumberToStringConverter;
 use Opilo\Farsi\StringCleaner;
@@ -13,7 +12,7 @@ class SampleTest
     {
         $dateTime = \DateTime::createFromFormat('Y-m-d', '2015-09-03');
 
-        $jalaliDate = DateConverter::dateTimeToJalali($dateTime);
+        $jalaliDate = JalaliDate::fromDateTime($dateTime);
 
         print("\n");
         print ($jalaliDate->format('D S M ماه سال X'));
@@ -53,4 +52,11 @@ class SampleTest
         print("\n");
     }
 
+    public function sample_6()
+    {
+        $jalaliDate = JalaliDate::fromFormat('Y/m/d', '1394/6/20');
+        print("\n");
+        print($jalaliDate->format('D، d M y'));
+        print("\n");
+    }
 }

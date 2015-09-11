@@ -10,14 +10,14 @@ This package provides Farsi tools for PHP developers.
 The `JalaliDate` class represents Iranian calendar. It calculates leap years based on data referenced in [this wiki page](https://fa.wikipedia.org/wiki/گاه‌شماری_رسمی_ایران).
 
 The following code shows how you can convert a `DateTime` object into a `JalaliDate` one and then print it according to a desired format.
-All you need is using methods in `DateConverter` and take a look at `JalaliFormatter::$conversionFunctions` array to know what to pass to `JalaliDate::format()` function as format string.
+All you need is using `JalaliDate::fromDateTime()` method and take a look at `JalaliFormatter::$conversionFunctions` array to know what to pass to `JalaliDate::format()` function as format string.
 
 ```php
-use Opilo\Farsi\DateConverter;
+use Opilo\Farsi\JalaliDate;
 
 $dateTime = \DateTime::createFromFormat('Y-m-d', '2015-09-03');
 
-$jalaliDate = DateConverter::dateTimeToJalali($dateTime);
+$jalaliDate = JalaliDate::fromDateTime($dateTime);
 
 print ($jalaliDate->format('D S M ماه سال X'));
 ```
@@ -38,6 +38,18 @@ print($dateTime->format('Y-m-d'));
 ```
 
 And the output will be: **2015-09-03**
+
+Conveniently, you can also directly convert an string with a known format into a `JalaliDate`:
+
+```php
+use Opilo\Farsi\JalaliDate;
+
+$jalaliDate = JalaliDate::fromFormat('Y/m/d', '1394/6/20');
+
+print($jalaliDate->format('D، d M y'));
+```
+
+The output of the code above, is: **جمعه، ۲۰ شهریور ۹۴**
 
 Note that if you try to construct an invalid `JalaliDate`, an `InvalidArgumentException` will be thrown.
 
