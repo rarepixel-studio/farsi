@@ -395,17 +395,30 @@ class JalaliDateTest extends PHPUnit_Framework_TestCase
         $this->assertEquals((new JalaliDate($y, $m, $d))->getWeekOfYear(), $w);
     }
 
-    public function testFormat()
+    public function test_format()
     {
         $this->assertEquals('94/5/30', (new JalaliDate(1394, 5, 30))->format('y/n/d', false));
         $this->assertEquals('۱۳۹۴/۰۵/۳۰', (new JalaliDate(1394, 5, 30))->format('Y/m/d', true));
     }
 
-    public function testToDateTime()
+    public function test_to_DateTime()
     {
         $jDate = new JalaliDate(1394, 6, 1);
         $dateTime = $jDate->toDateTime();
         $this->assertEquals('2015-08-23', $dateTime->format('Y-m-d'));
+    }
+
+    public function test_from_date_time()
+    {
+        $dateTime = \DateTime::createFromFormat('Y-m-d', '2015-08-23');
+        $jDate = new JalaliDate(1394, 6, 1);
+        $this->assertEquals($jDate, JalaliDate::fromDateTime($dateTime));
+    }
+
+    public function test_from_format()
+    {
+        $jDate = new JalaliDate(1394, 6, 1);
+        $this->assertEquals($jDate, JalaliDate::fromFormat('Y/m/d', '1394/6/1'));
     }
 
     public function _testS()

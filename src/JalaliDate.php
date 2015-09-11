@@ -160,6 +160,10 @@ class JalaliDate extends Date
         INF
     ];
 
+    /**
+     * @param int $nDays
+     * @return static
+     */
     public static function fromInteger($nDays)
     {
         $i = MiscHelpers::binarySearch($nDays, static::$fiveLeapYearsToInt);
@@ -209,6 +213,25 @@ class JalaliDate extends Date
         $month = MiscHelpers::binarySearch($delta1, static::$cumulativeDaysInMonth);
         $day = $delta1 - static::$cumulativeDaysInMonth[$month - 1];
         return new static($year, $month, $day);
+    }
+
+    /**
+     * @param DateTime $dateTime
+     * @return JalaliDate
+     */
+    public static function fromDateTime(DateTime $dateTime)
+    {
+        return DateConverter::dateTimeToJalali($dateTime);
+    }
+
+    /**
+     * @param string $format
+     * @param string $strDate
+     * @return JalaliDate
+     */
+    public static function fromFormat($format, $strDate)
+    {
+        return JalaliParser::createJalaliFromFormat($format, $strDate);
     }
 
     /**
