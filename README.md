@@ -1,5 +1,6 @@
 # Opilo Farsi Tools
 
+[![Build Status](https://travis-ci.org/halaei/farsi.svg)](https://travis-ci.org/halaei/farsi)
 [![Latest Stable Version](https://poser.pugx.org/opilo/farsi/v/stable)](https://packagist.org/packages/opilo/farsi)
 [![Total Downloads](https://poser.pugx.org/opilo/farsi/downloads)](https://packagist.org/packages/opilo/farsi)
 [![Latest Unstable Version](https://poser.pugx.org/opilo/farsi/v/unstable)](https://packagist.org/packages/opilo/farsi)
