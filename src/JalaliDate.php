@@ -270,7 +270,7 @@ class JalaliDate extends Date
     /**
      * @param string $format
      * @param bool $farsiDigits
-     * @return JalaliDate
+     * @return string
      */
     public function format($format, $farsiDigits = true)
     {
