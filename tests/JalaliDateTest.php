@@ -432,6 +432,12 @@ class JalaliDateTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function test_convert_a_special_date_to_georgian()
+    {
+        $jDate = new JalaliDate('1394', '9', '9');
+        $this->assertEquals('2015-11-30', $jDate->toDateTime()->format('Y-m-d'));
+    }
+
     public function _testS()
     {
         JalaliDatePublicized::printLastDayOfFileYearLeaps();

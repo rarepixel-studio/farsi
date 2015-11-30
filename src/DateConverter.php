@@ -39,7 +39,7 @@ class DateConverter
     public static function jalaliToDateTime(JalaliDate $jDate)
     {
         $firstDay = (new GeorgianDate(622, 3, 22))->toInteger();
-        $nDays = $jDate->toInteger() + $firstDay;
+        $nDays = $jDate->toInteger() + $firstDay - 1;
         $georgian = GeorgianDate::fromInteger($nDays);
         return static::georgianToDateTime($georgian);
     }

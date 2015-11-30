@@ -227,4 +227,13 @@ class DateConverterTest extends \PHPUnit_Framework_TestCase
     {
         $this->_test_2_Way_conversion('622-3-21', 0, 12, 30);
     }
+
+    public function brute_force_test_convert_between_georgian_and_jalali()
+    {
+        for ($i = 1; $i <= 539828; $i++) {
+            $this->assertEquals(JalaliDate::fromInteger($i)->format('Y-m-d'),
+                JalaliDate::fromDateTime(JalaliDate::fromInteger($i)->toDateTime())->format('Y-m-d'));
+        }
+    }
+
 }

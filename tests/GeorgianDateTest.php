@@ -28,4 +28,15 @@ class GeorgianDateTest extends PHPUnit_Framework_TestCase
         $this->assertFalse(GeorgianDate::isLeapYear(1103));
         $this->assertTrue(GeorgianDate::isLeapYear(1104));
     }
+
+    /**
+     * @throws \Exception
+     * @test
+     */
+    public function brute_force_test_from_and_to_integer()
+    {
+        for ($i = 1; $i < 1039828; $i++) {
+            $this->assertEquals($i, GeorgianDate::fromInteger($i)->toInteger());
+        }
+    }
 }

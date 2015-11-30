@@ -74,30 +74,51 @@ class GeorgianDate extends Date
         $fourCentury = 365 * 400 + static::nLeapYears(400);
         $century = 365 * 100 + static::nLeapYears(100);
         $fourYear = 365 * 4 + 1;
-        $year = 1 + floor($nDays / $fourCentury) * 400;
-        $nDays %= $fourCentury;
-        $year += floor($nDays / $century) * 100;
-        $nDays %= $century;
-        $year += floor($nDays / $fourYear) * 4;
-        $nDays %= $fourYear;
-        $year += floor($nDays / 365);
-        $nDays %= 365;
+
+        $year = 1 + floor(($nDays - 1) / $fourCentury) * 400;
+        $nDays -= $fourCentury * floor(($nDays - 1) / $fourCentury);
+
+        if ($nDays == $fourCentury) {
+            return new static($year + 399, 12, 31);
+        }
+
+        if ($nDays == $fourCentury - 1) {
+            return new static($year + 399, 12, 30);
+        }
+
+        $year += floor(($nDays - 1) / $century) * 100;
+        $nDays -= $century * floor(($nDays - 1) / $century);
+
+        if ($nDays == $century) {
+            return new static($year + 99, 12, 31);
+        }
+
+        $year += floor(($nDays - 1) / $fourYear) * 4;
+        $nDays -= $fourYear * (floor(($nDays - 1) / $fourYear));
+
+        if ($nDays == $fourYear) {
+            return new static($year + 3, 12, 31);
+        }
+
+        $year += floor(($nDays - 1) / 365);
+        $nDays -= 365 * floor(($nDays - 1) / 365);
 
         if(static::isLeapYear($year) && $nDays >= 60) {
-            if($nDays == 60) {
+            if ($nDays == 60) {
                 $month = 2;
                 $day = 29;
             } else {
-                $month = MiscHelpers::binarySearch($nDays, static::$cumulativeDaysInMonth);
-                $day = $nDays - static::$cumulativeDaysInMonth[$month - 1] - 2;
+                $month = MiscHelpers::binarySearch($nDays - 1, static::$cumulativeDaysInMonth);
+                $day = $nDays - static::$cumulativeDaysInMonth[$month - 1] - 1;
             }
         } else {
             $month = MiscHelpers::binarySearch($nDays, static::$cumulativeDaysInMonth);
-            $day = $nDays - static::$cumulativeDaysInMonth[$month - 1] - 1;
+            $day = $nDays - static::$cumulativeDaysInMonth[$month - 1];
         }
 
         return new static($year, $month, $day);
     }
+
     /**
      * Validates the constructed date
      * @return void
