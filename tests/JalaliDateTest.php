@@ -421,6 +421,17 @@ class JalaliDateTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($jDate, JalaliDate::fromFormat('Y/m/d', '1394/6/1'));
     }
 
+    /**
+     * @throws \Exception
+     * @test
+     */
+    public function brute_force_test_from_and_to_integer()
+    {
+        for ($i = 1; $i <= 539828; $i++) {
+            $this->assertEquals($i, JalaliDate::fromInteger($i)->toInteger());
+        }
+    }
+
     public function _testS()
     {
         JalaliDatePublicized::printLastDayOfFileYearLeaps();
