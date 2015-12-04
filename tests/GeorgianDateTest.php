@@ -32,6 +32,7 @@ class GeorgianDateTest extends PHPUnit_Framework_TestCase
     /**
      * @throws \Exception
      * @test
+     * @group brute_force
      */
     public function brute_force_test_from_and_to_integer()
     {

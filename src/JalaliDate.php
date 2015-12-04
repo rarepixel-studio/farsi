@@ -278,11 +278,14 @@ class JalaliDate extends Date
     }
 
     /**
+     * @param DateTime|null $time to set hours, minutes, seconds, microseconds and timezone.
+     * When null is provided for $time; hours, minutes, seconds, and microseconds will be reset to 0
+     * and timezone will be reset to the default timezone
      * @return DateTime
      */
-    public function toDateTime()
+    public function toDateTime(DateTime $time = null)
     {
-        return DateConverter::jalaliToDateTime($this);
+        return DateConverter::jalaliToDateTime($this, $time);
     }
 
     /**

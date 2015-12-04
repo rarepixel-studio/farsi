@@ -12,6 +12,7 @@ class SallarJdatetimeTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @test
+     * @group brute_force
      */
     public function brute_force_test_against_sallar_jdatetime()
     {

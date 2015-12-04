@@ -34,22 +34,34 @@ class DateConverter
 
     /**
      * @param JalaliDate $jDate
+     * @param DateTime|null $time to set hours, minutes, seconds, microseconds and timezone.
+     * When null is provided for $time; hours, minutes, seconds, and microseconds will be reset to 0
+     * and timezone will be reset to the default timezone
      * @return DateTime
      */
-    public static function jalaliToDateTime(JalaliDate $jDate)
+    public static function jalaliToDateTime(JalaliDate $jDate, DateTime $time = null)
     {
         $firstDay = (new GeorgianDate(622, 3, 22))->toInteger();
         $nDays = $jDate->toInteger() + $firstDay - 1;
         $georgian = GeorgianDate::fromInteger($nDays);
-        return static::georgianToDateTime($georgian);
+        return static::georgianToDateTime($georgian, $time);
     }
 
     /**
      * @param GeorgianDate $gDate
+     * @param DateTime|null $time to set hours, minutes, seconds, microseconds and timezone.
+     * When null is provided for $time; hours, minutes, seconds, and microseconds will be reset to 0
+     * and timezone will be reset to the default timezone
      * @return DateTime
      */
-    public static function georgianToDateTime(GeorgianDate $gDate)
+    public static function georgianToDateTime(GeorgianDate $gDate, DateTime $time = null)
     {
-        return DateTime::createFromFormat('Y-m-d|', $gDate->getYear() . '-' . $gDate->getMonth() . '-' . $gDate->getDay());
+        $date = DateTime::createFromFormat('Y-m-d|', $gDate->getYear() . '-' . $gDate->getMonth() . '-' . $gDate->getDay());
+
+        if (!is_null($time)) {
+            $date = DateTime::createFromFormat('Y-m-d H:i:s.u e', $date->format('Y-m-d') . $time->format(' H:i:s.u e'));
+        }
+
+        return $date;
     }
 }

@@ -424,6 +424,7 @@ class JalaliDateTest extends PHPUnit_Framework_TestCase
     /**
      * @throws \Exception
      * @test
+     * @group brute_force
      */
     public function brute_force_test_from_and_to_integer()
     {
@@ -432,10 +433,23 @@ class JalaliDateTest extends PHPUnit_Framework_TestCase
         }
     }
 
-    public function test_convert_a_special_date_to_georgian()
+    public function test_convert_to_date_time_without_time_being_set()
     {
+        $zone = date_default_timezone_get();
+        date_default_timezone_set('Asia/Tehran');
         $jDate = new JalaliDate('1394', '9', '9');
-        $this->assertEquals('2015-11-30', $jDate->toDateTime()->format('Y-m-d'));
+        $this->assertEquals('2015-11-30 00:00:00.000000 Asia/Tehran', $jDate->toDateTime()->format('Y-m-d H:i:s.u e'));
+        date_default_timezone_set($zone);
+    }
+
+    public function test_convert_to_date_time_with_time_being_set()
+    {
+        $zone = date_default_timezone_get();
+        date_default_timezone_set('Asia/Tehran');
+        $jDate = new JalaliDate('1394', '9', '9');
+        $time = \DateTime::createFromFormat('H:i:s.u e', '15:25:56.123456 UTC');
+        $this->assertEquals('2015-11-30 15:25:56.123456 UTC', $jDate->toDateTime($time)->format('Y-m-d H:i:s.u e'));
+        date_default_timezone_set($zone);
     }
 
     public function _testS()
