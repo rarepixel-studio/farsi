@@ -35,7 +35,7 @@ class DateConverterTest extends \PHPUnit_Framework_TestCase
 
     private function _test_convert_JalaliDate_to_DateTime($date, $y, $m, $d)
     {
-        $dateTime = \DateTime::createFromFormat('Y-m-d', $date);
+        $dateTime = \DateTime::createFromFormat('Y-m-d|', $date);
         $converted = $this->converter->jalaliToDateTime(new JalaliDate($y, $m, $d));
         $this->assertEquals($dateTime, $converted);
     }

@@ -50,6 +50,6 @@ class DateConverter
      */
     public static function georgianToDateTime(GeorgianDate $gDate)
     {
-        return DateTime::createFromFormat('Y-m-d', $gDate->getYear() . '-' . $gDate->getMonth() . '-' . $gDate->getDay());
+        return DateTime::createFromFormat('Y-m-d|', $gDate->getYear() . '-' . $gDate->getMonth() . '-' . $gDate->getDay());
     }
 }
