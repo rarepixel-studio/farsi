@@ -9,7 +9,7 @@
 This package provides Farsi tools for PHP developers.
 ## Jalali (Higri Shamsi) Date
 The `JalaliDate` class represents Iranian calendar. It calculates leap years based on data referenced in [this wiki page](https://fa.wikipedia.org/wiki/گاه‌شماری_رسمی_ایران).
-According to the tests done in `tests/SallarJdatetimeTest.php`, for years between 1343 and 1473, the leap years in this calendar perfectly matches those of `calculated` leap years based on the proposed calculation rules.
+According to the tests done in `tests/SallarJdatetimeTest.php`, for years between 1343 and 1473, the leap years in this calendar perfectly match those of `calculated` leap years based on the proposed calculation rules.
 But it should be considered that Iranian calendar is based on astronomical observations and, unlike the Georgian, it is not a rule-based calendar.
 
 The following code shows how you can convert a `DateTime` object into a `JalaliDate` one and then print it according to a desired format.
