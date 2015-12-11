@@ -6,6 +6,20 @@ php:
   - 5.6
   - 7.0
   - hhvm
+
+env:
+  global:
+    - test_group=no_brute_force
+
+matrix:
+  include:
+    - php: hhvm
+      env: brute_force=no
+    - php: hhvm
+      env: brute_force=yes
+
 install:
   - composer install --no-interaction --prefer-source
 script: vendor/bin/phpunit
+  - if [[ $brute_force = 'no' ]]; then vendor/bin/phpunit --exclude-group=brute_force; fi
+  - if [[ $brute_force = 'yes' ]]; then vendor/bin/phpunit; fi
