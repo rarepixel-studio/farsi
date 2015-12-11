@@ -9,12 +9,10 @@ php:
 
 env:
   global:
-    - test_group=no_brute_force
+    - brute_force=no
 
 matrix:
   include:
-    - php: hhvm
-      env: brute_force=no
     - php: hhvm
       env: brute_force=yes
 
