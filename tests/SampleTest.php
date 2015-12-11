@@ -14,49 +14,48 @@ class SampleTest
 
         $jalaliDate = JalaliDate::fromDateTime($dateTime);
 
-        print("\n");
-        print ($jalaliDate->format('D S M ماه سال X'));
-
+        echo("\n");
+        echo($jalaliDate->format('D S M ماه سال X'));
     }
 
     public function sample_2()
     {
         $jalaliDate = new JalaliDate(1394, 6, 12);
         $dateTime = $jalaliDate->toDateTime();
-        print("\n");
-        print($dateTime->format('Y-m-d'));
-        print("\n");
+        echo("\n");
+        echo($dateTime->format('Y-m-d'));
+        echo("\n");
     }
 
     public function sample_3()
     {
-        print("\n");
-        print NumberToStringConverter::toString(21034510);
-        print("\n");
+        echo("\n");
+        echo NumberToStringConverter::toString(21034510);
+        echo("\n");
     }
 
     public function sample_4()
     {
-        print("\n");
-        print ('نکته‌ی ' . NumberToStringConverter::toOrdinalString(2));
-        print("\n");
+        echo("\n");
+        echo('نکته‌ی ' . NumberToStringConverter::toOrdinalString(2));
+        echo("\n");
     }
 
     public function sample_5()
     {
-        print(StringCleaner::digitsToFarsi('1394'));
-        print("\n");
-        print(StringCleaner::digitsToEnglish('۱۳۹۴'));
-        print("\n");
-        print(StringCleaner::arabicToFarsi('كيك پي اچ پي چيست؟'));
-        print("\n");
+        echo(StringCleaner::digitsToFarsi('1394'));
+        echo("\n");
+        echo(StringCleaner::digitsToEnglish('۱۳۹۴'));
+        echo("\n");
+        echo(StringCleaner::arabicToFarsi('كيك پي اچ پي چيست؟'));
+        echo("\n");
     }
 
     public function sample_6()
     {
         $jalaliDate = JalaliDate::fromFormat('Y/m/d', '1394/6/20');
-        print("\n");
-        print($jalaliDate->format('D، d M y'));
-        print("\n");
+        echo("\n");
+        echo($jalaliDate->format('D، d M y'));
+        echo("\n");
     }
 }

@@ -14,18 +14,15 @@ class JalaliDateTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(JalaliDate::isLeapYear(1375));
         $this->assertTrue(JalaliDate::isLeapYear(1478));
 
-
         $this->assertTrue(JalaliDate::isLeapYear(1379));
         $this->assertTrue(JalaliDate::isLeapYear(1383));
         $this->assertTrue(JalaliDate::isLeapYear(1387));
         $this->assertTrue(JalaliDate::isLeapYear(1391));
 
-
         $this->assertFalse(JalaliDate::isLeapYear(10));
         $this->assertFalse(JalaliDate::isLeapYear(560));
         $this->assertFalse(JalaliDate::isLeapYear(1378));
         $this->assertFalse(JalaliDate::isLeapYear(1477));
-
 
         $this->assertFalse(JalaliDate::isLeapYear(1380));
         $this->assertFalse(JalaliDate::isLeapYear(1384));
@@ -460,12 +457,10 @@ class JalaliDateTest extends PHPUnit_Framework_TestCase
 
 class JalaliDatePublicized extends JalaliDate
 {
-
     public static function printLastDayOfFileYearLeaps()
     {
-        for($i = 1; $i < count(static::$fiveLeapYears) - 1; $i++)
-        {
-            print((new static(static::$fiveLeapYears[$i], 12, 30))->toInteger() . "\n");
+        for ($i = 1; $i < count(static::$fiveLeapYears) - 1; $i++) {
+            echo((new static(static::$fiveLeapYears[$i], 12, 30))->toInteger() . "\n");
         }
     }
 

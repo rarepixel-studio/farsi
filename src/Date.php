@@ -4,17 +4,6 @@ namespace Opilo\Farsi;
 
 use InvalidArgumentException;
 
-/**
- * Class Date
- * @package Opilo\Farsi
- *
- * This class and its derived subclasses has no responsibility regarding timezone, and time.
- * They do not have any arithmetic functionality over date, like addDay() or so.
- * They do not have any toString() functionality either.
- * They only represents a date in different calendars (e.g. Jalali, and Georgian).
- * In order to convert a Georgian date between calendars use Opilo\DateConverter static functions.
- *
- */
 abstract class Date
 {
     protected $year;
@@ -28,9 +17,9 @@ abstract class Date
      */
     public function __construct($year, $month, $day)
     {
-        $this->year = (int)$year;
-        $this->month = (int)$month;
-        $this->day = (int)$day;
+        $this->year = (int) $year;
+        $this->month = (int) $month;
+        $this->day = (int) $day;
         $this->validate();
     }
 
@@ -69,11 +58,11 @@ abstract class Date
     /**
      * @return int the rank of day in the current year
      */
-    public abstract function dayOfYear();
+    abstract public function dayOfYear();
 
     /**
-     * Validates the constructed date
-     * @return void
+     * Validates the constructed date.
+     *
      * @throws InvalidArgumentException
      */
     protected function validate()
@@ -82,10 +71,10 @@ abstract class Date
         $m = $this->getMonth();
         $y = $this->getYear();
 
-        if(!($d > 0 && $m > 0 && $y > 0 && $m <= 12 && $d <= 31)) {
+        if (!($d > 0 && $m > 0 && $y > 0 && $m <= 12 && $d <= 31)) {
             throw new InvalidArgumentException();
         }
     }
 
-    protected abstract function numberOfLeapYearsPast();
+    abstract protected function numberOfLeapYearsPast();
 }

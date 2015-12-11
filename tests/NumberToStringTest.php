@@ -101,13 +101,14 @@ class NumberToStringTest extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider provider
+     *
      * @param $intNum
      * @param $strNum
      */
     public function testNumbersToString($intNum, $strNum)
     {
         $this->assertEquals($strNum, $this->converter->toString($intNum));
-        if($intNum) {
+        if ($intNum) {
             $this->assertEquals('منفی ' . $strNum, $this->converter->toString(-$intNum));
         }
     }

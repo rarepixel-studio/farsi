@@ -5,20 +5,12 @@ namespace Opilo\Farsi;
 use DateTime;
 use InvalidArgumentException;
 
-/**
- * Class JalaliDate
- * @package Opilo\Farsi
- *
- * Hejri Shamsi (Iranian) Date
- *
- * @link https://fa.wikipedia.org/wiki/گاه‌شماری_رسمی_ایران
- *
- */
 class JalaliDate extends Date
 {
     /**
+     * Dates after this constant is not supported (due to the lack of data).
+     *
      * @var array
-     * Dates after this constant is not supported (due to the lack of data)
      */
     protected static $farthestSupportedDate = [1478, 12, 30];
 
@@ -54,9 +46,10 @@ class JalaliDate extends Date
     ];
 
     /**
-     * @var array The list of 5-leap-years in Jalali Calendar
-     * A 5-leap-year is a leap-year that occurs 5 years after the previous leap-year
-     * 0 and INF are here just for ease of computation
+     * The list of 5-leap-years in Jalali Calendar. A 5-leap-year is a leap-year that occurs 5 years after the previous
+     * leap-year. 0 and INF are here just for the ease of computation.
+     *
+     * @var array
      */
     protected static $fiveLeapYears = [
         0,
@@ -111,7 +104,7 @@ class JalaliDate extends Date
 
     protected static $fiveLeapYearsToInt = [
         0,
-        3287,//(new JalaliDate(9, 12, 30))->toInteger
+        3287, //(new JalaliDate(9, 12, 30))->toInteger
         15340,
         25932,
         37985,
@@ -157,11 +150,12 @@ class JalaliDate extends Date
         514261,
         526314,
         539828,
-        INF
+        INF,
     ];
 
     /**
      * @param int $nDays
+     *
      * @return static
      */
     public static function fromInteger($nDays)
@@ -173,11 +167,11 @@ class JalaliDate extends Date
         /** @var int $delta2 the difference between upper-bound ($upper) and the input ($nDays) in days*/
         $delta2 = $upper->toInteger() - $nDays;
 
-        if(! $delta2) {
+        if (!$delta2) {
             return $upper;
         }
 
-        if($delta2 <= 365) {
+        if ($delta2 <= 365) {
             $year = $upper->getYear();
             /** @var static $lower lower-bound */
             $lower = new static($year - 1, 12, 29);
@@ -185,17 +179,19 @@ class JalaliDate extends Date
             $delta1 = $nDays - $lower->toInteger();
             $month = MiscHelpers::binarySearch($delta1, static::$cumulativeDaysInMonth);
             $day = $delta1 - static::$cumulativeDaysInMonth[$month - 1];
+
             return new static($year, $month, $day);
         }
 
-        if($delta2 <= 5 * 365) {
+        if ($delta2 <= 5 * 365) {
             $lower = new static($upper->getYear() - 5, 12, 30);
             $delta1 = $nDays - $lower->toInteger();
-            $year =  $lower->getYear() + ceil($delta1 / 365);
+            $year = $lower->getYear() + ceil($delta1 / 365);
             $lower = new static($year, 1, 1);
             $delta1 = $nDays - $lower->toInteger() + 1;
             $month = MiscHelpers::binarySearch($delta1, static::$cumulativeDaysInMonth);
             $day = $delta1 - static::$cumulativeDaysInMonth[$month - 1];
+
             return new static($year, $month, $day);
         }
 
@@ -204,7 +200,7 @@ class JalaliDate extends Date
         $delta1 = $nDays - $lower->toInteger() + 1;
 
         /** @var static $lower last leap year*/
-        $lower = new static($lower->getYear() + 4 * (int)($delta1 / (4 * 365 + 1)), 1, 1);
+        $lower = new static($lower->getYear() + 4 * (int) ($delta1 / (4 * 365 + 1)), 1, 1);
         $delta1 = $nDays - $lower->toInteger() + 1;
 
         $year = $lower->getYear() - 1 + ceil($delta1 / 365);
@@ -212,11 +208,13 @@ class JalaliDate extends Date
         $delta1 = $nDays - $lower->toInteger() + 1;
         $month = MiscHelpers::binarySearch($delta1, static::$cumulativeDaysInMonth);
         $day = $delta1 - static::$cumulativeDaysInMonth[$month - 1];
+
         return new static($year, $month, $day);
     }
 
     /**
      * @param DateTime $dateTime
+     *
      * @return JalaliDate
      */
     public static function fromDateTime(DateTime $dateTime)
@@ -227,6 +225,7 @@ class JalaliDate extends Date
     /**
      * @param string $format
      * @param string $strDate
+     *
      * @return JalaliDate
      */
     public static function fromFormat($format, $strDate)
@@ -235,17 +234,20 @@ class JalaliDate extends Date
     }
 
     /**
+     * Dates after this is not supported (due to the lack of data).
+     *
      * @return static
-     * Dates after this constant is not supported (due to the lack of data)
      */
     public static function getFarthestSupportedDate()
     {
         list($y, $m, $d) = static::$farthestSupportedDate;
+
         return new static($y, $m, $d);
     }
 
     /**
      * @param int $month
+     *
      * @return int
      */
     public static function getDaysInMonth($month)
@@ -255,21 +257,24 @@ class JalaliDate extends Date
 
     /**
      * @param int $year
+     *
      * @return bool
      */
     public static function isLeapYear($year)
     {
         $i = MiscHelpers::binarySearch($year, static::$fiveLeapYears);
-        if(static::$fiveLeapYears[$i] == $year) {
+        if (static::$fiveLeapYears[$i] == $year) {
             return true;
         }
         $delta = static::$fiveLeapYears[$i] - $year;
+
         return $delta > 1 && $delta % 4 == 1;
     }
 
     /**
      * @param string $format
-     * @param bool $farsiDigits
+     * @param bool   $farsiDigits
+     *
      * @return string
      */
     public function format($format, $farsiDigits = true)
@@ -278,9 +283,10 @@ class JalaliDate extends Date
     }
 
     /**
-     * @param DateTime|null $time to set hours, minutes, seconds, microseconds and timezone.
-     * When null is provided for $time; hours, minutes, seconds, and microseconds will be reset to 0
-     * and timezone will be reset to the default timezone
+     * @param DateTime|null $time to set hours, minutes, seconds, microseconds and timezone. When null is provided for
+     *                            $time; hours, minutes, seconds, and microseconds will be reset to 0 and timezone will
+     *                            be reset to the default timezone.
+     *
      * @return DateTime
      */
     public function toDateTime(DateTime $time = null)
@@ -319,12 +325,13 @@ class JalaliDate extends Date
     {
         $n = $this->dayOfYear();
         $f = (new static($this->getYear(), 1, 1))->getWeekDay();
-        return (int)(($n - 1 + $f) / 7) + 1;
+
+        return (int) (($n - 1 + $f) / 7) + 1;
     }
 
     /**
-     * Validates the constructed date
-     * @return void
+     * Validates the constructed date.
+     *
      * @throws InvalidArgumentException
      */
     protected function validate()
@@ -333,8 +340,8 @@ class JalaliDate extends Date
         $d = $this->getDay();
         $m = $this->getMonth();
 
-        if($d > static::$daysInMonth[$m - 1]) {
-            if(!($m == 12 && $d == 30 && $this->isInLeapYear())) {
+        if ($d > static::$daysInMonth[$m - 1]) {
+            if (!($m == 12 && $d == 30 && $this->isInLeapYear())) {
                 throw new InvalidArgumentException();
             }
         }
@@ -346,6 +353,7 @@ class JalaliDate extends Date
 
         /** @var int $nHops number of 365-day-years followed a five-leap-year*/
         $nHops = MiscHelpers::binarySearch($y + 1, static::$fiveLeapYears);
-        return (int)(($y - $nHops) / 4);
+
+        return (int) (($y - $nHops) / 4);
     }
 }

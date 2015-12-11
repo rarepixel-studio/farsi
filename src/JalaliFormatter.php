@@ -25,17 +25,18 @@ class JalaliFormatter
     ];
 
     protected static $monthNames = [
-        'فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'
+        'فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند',
     ];
 
     protected static $weekDays = [
-        'شنبه', 'یک‌شنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنج‌شنبه', 'جمعه'
+        'شنبه', 'یک‌شنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنج‌شنبه', 'جمعه',
     ];
 
     /**
      * @param JalaliDate $date
-     * @param string $format
-     * @param bool $farsiDigits whether to convert english digits to farsi
+     * @param string     $format
+     * @param bool       $farsiDigits whether to convert english digits to farsi
+     *
      * @return string
      */
     public static function JalaliToString(JalaliDate $date, $format, $farsiDigits = true)
@@ -44,12 +45,12 @@ class JalaliFormatter
         $functions = str_split($format);
         $escaped = false;
         foreach ($functions as $function) {
-            if($escaped) {
+            if ($escaped) {
                 $output .= $function;
                 $escaped = false;
-            } else if($function === '\\') {
+            } elseif ($function === '\\') {
                 $escaped = true;
-            } else if(array_key_exists($function, static::$conversionFunctions)){
+            } elseif (array_key_exists($function, static::$conversionFunctions)) {
                 $f = static::$conversionFunctions[$function];
                 $output .= static::$f($date);
             } else {
@@ -57,7 +58,7 @@ class JalaliFormatter
             }
         }
 
-        if($farsiDigits) {
+        if ($farsiDigits) {
             $output = StringCleaner::digitsToFarsi($output);
         }
 
@@ -67,6 +68,7 @@ class JalaliFormatter
     protected static function get2DigitDay(JalaliDate $date)
     {
         $day = static::getDay($date);
+
         return strlen($day) == 1 ? '0' . $day : $day;
     }
 
@@ -88,6 +90,7 @@ class JalaliFormatter
     protected static function get2DigitMonth(JalaliDate $date)
     {
         $month = static::getMonth($date);
+
         return strlen($month) == 1 ? '0' . $month : $month;
     }
 
@@ -119,6 +122,7 @@ class JalaliFormatter
     protected static function get2DigitYear(JalaliDate $date)
     {
         $year = $date->getYear() % 100;
+
         return strlen($year) == 1 ? '0' . $year : $year;
     }
 

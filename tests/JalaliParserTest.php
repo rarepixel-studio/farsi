@@ -8,7 +8,6 @@ use PHPUnit_Framework_TestCase;
 
 class JalaliParserTest extends PHPUnit_Framework_TestCase
 {
-
     public function provideFormats()
     {
         return [

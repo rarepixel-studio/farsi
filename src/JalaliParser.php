@@ -24,6 +24,7 @@ class JalaliParser
      * @param string $format
      * @param string $date
      * @throw InvalidArgumentException
+     *
      * @return JalaliDate
      */
     public static function createJalaliFromFormat($format, $date)
@@ -63,6 +64,7 @@ class JalaliParser
             throw new InvalidArgumentException();
         }
         $dateParts->fillWithMatches($matches);
+
         return $dateParts->createJalaliDate();
     }
 
@@ -70,6 +72,7 @@ class JalaliParser
     {
         $matchCount++;
         $dateParts->day = $matchCount;
+
         return '[0-9]{1,2}';
     }
 
@@ -77,6 +80,7 @@ class JalaliParser
     {
         $matchCount++;
         $dateParts->dayOfYear = $matchCount;
+
         return '[0-9]{1,3}';
     }
 
@@ -84,6 +88,7 @@ class JalaliParser
     {
         $matchCount++;
         $dateParts->month = $matchCount;
+
         return '[0-9]{1,2}';
     }
 
@@ -91,6 +96,7 @@ class JalaliParser
     {
         $matchCount++;
         $dateParts->year = $matchCount;
+
         return '[0-9]*';
     }
 
@@ -98,6 +104,7 @@ class JalaliParser
     {
         $matchCount++;
         $dateParts->yearOfCentury = $matchCount;
+
         return '[0-9]{1,2}';
     }
 
@@ -105,6 +112,7 @@ class JalaliParser
     {
         $matchCount++;
         $dateParts->strMonth = $matchCount;
+
         return '[الف-ی]*';
     }
 }
@@ -114,18 +122,18 @@ class DateParts
     protected static $defaultCentury = 1300;
 
     protected static $monthNameToMonthNumber = [
-        'فروردین' => 1,
+        'فروردین'  => 1,
         'اردیبهشت' => 2,
-        'خرداد' => 3,
-        'تیر' => 4,
-        'مرداد' => 5,
-        'شهریور' => 6,
-        'مهر' => 7,
-        'آبان' => 8,
-        'آذر' => 9,
-        'دی' => 10,
-        'بهمن' => 11,
-        'اسفند' => 12,
+        'خرداد'    => 3,
+        'تیر'      => 4,
+        'مرداد'    => 5,
+        'شهریور'   => 6,
+        'مهر'      => 7,
+        'آبان'     => 8,
+        'آذر'      => 9,
+        'دی'       => 10,
+        'بهمن'     => 11,
+        'اسفند'    => 12,
     ];
     public $year;
     public $yearOfCentury;
@@ -183,6 +191,7 @@ class DateParts
             return new JalaliDate($y, $this->getMonth(), $this->day);
         }
         $firstDay = new JalaliDate($y, 1, 1);
+
         return JalaliDate::fromInteger($firstDay->toInteger() - 1 + $this->dayOfYear);
     }
 
@@ -196,9 +205,10 @@ class DateParts
      */
     protected function getMonthByName()
     {
-        if(! array_key_exists($this->strMonth, static::$monthNameToMonthNumber)) {
+        if (!array_key_exists($this->strMonth, static::$monthNameToMonthNumber)) {
             throw new InvalidArgumentException();
         }
+
         return static::$monthNameToMonthNumber[$this->strMonth];
     }
 }

@@ -26,13 +26,13 @@ class GeorgianDate extends Date
 
     protected static function nLeapYears($year)
     {
-        $a = (int)($year / 400);
+        $a = (int) ($year / 400);
         $b = $year % 400;
-        $c = (int)($b / 100);
+        $c = (int) ($b / 100);
         $d = $b % 100;
-        $e = (int)($d / 4);
-        return (int) ($a * 97 + $c * 24 + $e);
+        $e = (int) ($d / 4);
 
+        return (int) ($a * 97 + $c * 24 + $e);
     }
 
     /**
@@ -50,23 +50,26 @@ class GeorgianDate extends Date
     {
         $m = $this->getMonth() - 1;
         $d = static::$cumulativeDaysInMonth[$m] + $this->getDay();
-        if($m > 1 && static::isLeapYear($this->year)) {
+        if ($m > 1 && static::isLeapYear($this->year)) {
             $d++;
         }
+
         return $d;
     }
 
     /**
      * @param int $year
+     *
      * @return bool
      */
     public static function isLeapYear($year)
     {
-        return ! ($year % 4) && ($year % 100 || ! ($year % 400));
+        return !($year % 4) && ($year % 100 || !($year % 400));
     }
 
     /**
      * @param int $nDays
+     *
      * @return static
      */
     public static function fromInteger($nDays)
@@ -103,7 +106,7 @@ class GeorgianDate extends Date
         $year += floor(($nDays - 1) / 365);
         $nDays -= 365 * floor(($nDays - 1) / 365);
 
-        if(static::isLeapYear($year) && $nDays >= 60) {
+        if (static::isLeapYear($year) && $nDays >= 60) {
             if ($nDays == 60) {
                 $month = 2;
                 $day = 29;
@@ -120,8 +123,8 @@ class GeorgianDate extends Date
     }
 
     /**
-     * Validates the constructed date
-     * @return void
+     * Validates the constructed date.
+     *
      * @throws \InvalidArgumentException
      */
     protected function validate()
@@ -131,8 +134,8 @@ class GeorgianDate extends Date
         $d = $this->getDay();
         $m = $this->getMonth();
 
-        if($d > static::$daysInMonth[$m - 1]) {
-            if(!($m == 2 && $d == 29 && static::isLeapYear($this->getYear()))) {
+        if ($d > static::$daysInMonth[$m - 1]) {
+            if (!($m == 2 && $d == 29 && static::isLeapYear($this->getYear()))) {
                 throw new InvalidArgumentException();
             }
         }
