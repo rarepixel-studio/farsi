@@ -18,6 +18,6 @@ matrix:
 
 install:
   - composer install --no-interaction --prefer-source
-script: vendor/bin/phpunit
+script:
   - if [[ $brute_force = 'no' ]]; then vendor/bin/phpunit --exclude-group=brute_force; fi
   - if [[ $brute_force = 'yes' ]]; then vendor/bin/phpunit; fi
