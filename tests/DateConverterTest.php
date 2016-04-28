@@ -212,7 +212,7 @@ class DateConverterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \InvalidArgumentException
+     * @expectedException \Opilo\Farsi\InvalidDateException
      */
     public function test_convert_to_days_after_farthest_supported_day_fails()
     {
@@ -221,7 +221,7 @@ class DateConverterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \InvalidArgumentException
+     * @expectedException \Opilo\Farsi\InvalidDateException
      */
     public function test_convert_to_days_before_day_one_fails()
     {

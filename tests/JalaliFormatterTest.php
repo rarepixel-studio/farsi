@@ -4,6 +4,7 @@ namespace OpiloTest\Farsi;
 
 use Opilo\Farsi\JalaliDate;
 use Opilo\Farsi\JalaliFormatter;
+use Opilo\Farsi\JDateTime;
 use PHPUnit_Framework_TestCase;
 
 class JalaliFormatterTest extends PHPUnit_Framework_TestCase
@@ -96,6 +97,23 @@ class JalaliFormatterTest extends PHPUnit_Framework_TestCase
         ];
     }
 
+    public function provideJDateTimeSamples()
+    {
+        return [
+            [1394, 5, 23, 13, 2, 3, 'Y/m/d h:i:s', '1394/05/23 13:02:03'],
+            [1394, 5, 23, 13, 15, 2, 'y/M/j g:i a', '94/مرداد/23 1:15 pm'],
+            [1394, 5, 23, 14, 15, 16, 'y/n/j H (G A)', '94/5/23 14 (2 PM)'],
+
+            [1404, 2, 3, 1, 2, 3, 'Y-m-d G b', '1404-02-03 01 ق.ظ'],
+            [1404, 2, 3, 3, 4, 5, 'y-M-j H B', '04-اردیبهشت-3 03 قبل از ظهر'],
+            [1404, 2, 3, 20, 30, 0, 'y-n-j B', '04-2-3 بعد از ظهر'],
+
+            [1404, 2, 3, 1, 2, 3, 'z b', '34 ق.ظ'],
+
+            [1375, 2, 3, 1, 0, 0, 'L B', '1 قبل از ظهر'],
+        ];
+    }
+
     /**
      * @param $year
      * @param $month
@@ -106,7 +124,8 @@ class JalaliFormatterTest extends PHPUnit_Framework_TestCase
      */
     public function testJalaliToString($year, $month, $day, $format, $output)
     {
-        $this->assertEquals($output, JalaliFormatter::JalaliToString(new JalaliDate($year, $month, $day), $format, false));
+        $this->assertEquals($output, JalaliFormatter::jalaliToString(new JalaliDate($year, $month, $day), $format, false));
+        $this->assertEquals($output, JalaliFormatter::jalaliToString(new JDateTime($year, $month, $day, 1, 2, 3), $format, false));
     }
 
     /**
@@ -119,6 +138,23 @@ class JalaliFormatterTest extends PHPUnit_Framework_TestCase
      */
     public function testJalaliToFarsiString($year, $month, $day, $format, $output)
     {
-        $this->assertEquals($output, JalaliFormatter::JalaliToString(new JalaliDate($year, $month, $day), $format));
+        $this->assertEquals($output, JalaliFormatter::jalaliToString(new JalaliDate($year, $month, $day), $format));
+        $this->assertEquals($output, JalaliFormatter::jalaliToString(new JDateTime($year, $month, $day, 0, 0, 0), $format));
+    }
+
+    /**
+     * @param $year
+     * @param $month
+     * @param $day
+     * @param $hour
+     * @param $minute
+     * @param $second
+     * @param $format
+     * @param $output
+     * @dataProvider provideJDateTimeSamples
+     */
+    public function testJDateTimeToString($year, $month, $day, $hour, $minute, $second, $format, $output)
+    {
+        $this->assertEquals($output, JalaliFormatter::jalaliToString(new JDateTime($year, $month, $day, $hour, $minute, $second), $format, false));
     }
 }

@@ -2,8 +2,6 @@
 
 namespace Opilo\Farsi;
 
-use InvalidArgumentException;
-
 class JalaliParser
 {
     protected static $conversionFunctions = [
@@ -20,14 +18,23 @@ class JalaliParser
         'y' => 'parseYearOfCentury',
     ];
 
+    protected static $timeConversionFunctions = [
+        'g' => 'parse12Hour',
+        'h' => 'parse24Hour',
+        'i' => 'parseMinute',
+        's' => 'parseSecond',
+    ];
+
     /**
      * @param string $format
      * @param string $date
-     * @throw InvalidArgumentException
+     * @param bool $includeTime
      *
-     * @return JalaliDate
+     * @return JalaliDate|JDateTime
+     *
+     * @throw InvalidDateException
      */
-    public static function createJalaliFromFormat($format, $date)
+    public static function createJalaliFromFormat($format, $date, $includeTime = false)
     {
         $dateParts = new DateParts();
         $regexp = '';
@@ -47,23 +54,39 @@ class JalaliParser
             } elseif (array_key_exists($function, static::$conversionFunctions)) {
                 $f = static::$conversionFunctions[$function];
                 $regexp .= '(' . static::$f($dateParts, $matchCount) . ')';
+            }elseif ($includeTime && array_key_exists($function, static::$timeConversionFunctions)) {
+                $f = static::$timeConversionFunctions[$function];
+                $regexp .= '(' . static::$f($dateParts, $matchCount) . ')';
             } else {
                 $regexp .= preg_quote($function, '/');
             }
         }
 
         if ($dateParts->isAmbiguous()) {
-            throw new InvalidArgumentException();
+            throw new InvalidDateException($date);
         }
 
         $regexp = "/^$regexp\$/";
         $date = StringCleaner::digitsToEnglish($date);
         if (!preg_match($regexp, $date, $matches)) {
-            throw new InvalidArgumentException();
+            throw new InvalidDateException($date);
         }
         $dateParts->fillWithMatches($matches);
 
         return $dateParts->createJalaliDate();
+    }
+
+    /**
+     * @param string $format
+     * @param string $date
+     *
+     * @return JDateTime
+     *
+     * @throw InvalidDateException
+     */
+    public function createJDateTimeFromFormat($format, $date)
+    {
+        return static::createJalaliFromFormat($format, $date, true);
     }
 
     protected static function parseDay(DateParts $dateParts, &$matchCount)
@@ -204,7 +227,7 @@ class DateParts
     protected function getMonthByName()
     {
         if (!array_key_exists($this->strMonth, static::$monthNameToMonthNumber)) {
-            throw new InvalidArgumentException();
+            throw new InvalidDateException($this->strMonth);
         }
 
         return static::$monthNameToMonthNumber[$this->strMonth];

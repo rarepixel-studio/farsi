@@ -2,8 +2,6 @@
 
 namespace Opilo\Farsi;
 
-use Doctrine\Instantiator\Exception\InvalidArgumentException;
-
 class GeorgianDate extends Date
 {
     protected static $cumulativeDaysInMonth = [
@@ -125,7 +123,7 @@ class GeorgianDate extends Date
     /**
      * Validates the constructed date.
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidDateException
      */
     protected function validate()
     {
@@ -136,7 +134,7 @@ class GeorgianDate extends Date
 
         if ($d > static::$daysInMonth[$m - 1]) {
             if (!($m == 2 && $d == 29 && static::isLeapYear($this->getYear()))) {
-                throw new InvalidArgumentException();
+                throw new InvalidDateException($this);
             }
         }
     }

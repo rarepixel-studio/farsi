@@ -24,6 +24,23 @@ class JalaliFormatter
         'V' => 'getWeekOfYear',
     ];
 
+    protected static $timeConversionFunctions = [
+        'a' => 'getLowerMeridiem',
+        'A' => 'getHigherMeridiem',
+        'b' => 'getFarsiMeridiem',
+        'B' => 'getLongFarsiMeridiem',
+        'g' => 'get12Hour',
+        'G' => 'get24Hour',
+        'h' => 'get2Digit12Hour',
+        'H' => 'get2Digit24Hour',
+        'i' => 'getMinutes',
+        's' => 'getSeconds',
+        'o' => 'get12HourString',
+        'p' => 'get24HourString',
+        'q' => 'getMinuteString',
+        'r' => 'getSecondString',
+    ];
+
     protected static $monthNames = [
         'فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند',
     ];
@@ -33,13 +50,13 @@ class JalaliFormatter
     ];
 
     /**
-     * @param JalaliDate $date
+     * @param JalaliDate|JDateTime $date
      * @param string     $format
      * @param bool       $farsiDigits whether to convert english digits to farsi
      *
      * @return string
      */
-    public static function JalaliToString(JalaliDate $date, $format, $farsiDigits = true)
+    public static function jalaliToString(JalaliDate $date, $format, $farsiDigits = true)
     {
         $output = '';
         $functions = str_split($format);
@@ -52,6 +69,9 @@ class JalaliFormatter
                 $escaped = true;
             } elseif (array_key_exists($function, static::$conversionFunctions)) {
                 $f = static::$conversionFunctions[$function];
+                $output .= static::$f($date);
+            } elseif ($date instanceof JDateTime && array_key_exists($function, static::$timeConversionFunctions)) {
+                $f = static::$timeConversionFunctions[$function];
                 $output .= static::$f($date);
             } else {
                 $output .= $function;
@@ -77,7 +97,7 @@ class JalaliFormatter
         return (string) $date->getDay();
     }
 
-    public static function getDayString(JalaliDate $date)
+    protected static function getDayString(JalaliDate $date)
     {
         return NumberToStringConverter::toOrdinalString($date->getDay());
     }

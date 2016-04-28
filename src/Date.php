@@ -2,8 +2,6 @@
 
 namespace Opilo\Farsi;
 
-use InvalidArgumentException;
-
 abstract class Date
 {
     protected $year;
@@ -63,7 +61,7 @@ abstract class Date
     /**
      * Validates the constructed date.
      *
-     * @throws InvalidArgumentException
+     * @throws InvalidDateException
      */
     protected function validate()
     {
@@ -72,7 +70,7 @@ abstract class Date
         $y = $this->getYear();
 
         if (!($d > 0 && $m > 0 && $y > 0 && $m <= 12 && $d <= 31)) {
-            throw new InvalidArgumentException();
+            throw new InvalidDateException($this);
         }
     }
 

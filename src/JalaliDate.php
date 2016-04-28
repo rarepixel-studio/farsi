@@ -3,7 +3,6 @@
 namespace Opilo\Farsi;
 
 use DateTime;
-use InvalidArgumentException;
 
 class JalaliDate extends Date
 {
@@ -279,7 +278,7 @@ class JalaliDate extends Date
      */
     public function format($format, $farsiDigits = true)
     {
-        return JalaliFormatter::JalaliToString($this, $format, $farsiDigits);
+        return JalaliFormatter::jalaliToString($this, $format, $farsiDigits);
     }
 
     /**
@@ -332,7 +331,7 @@ class JalaliDate extends Date
     /**
      * Validates the constructed date.
      *
-     * @throws InvalidArgumentException
+     * @throws InvalidDateException
      */
     protected function validate()
     {
@@ -342,7 +341,7 @@ class JalaliDate extends Date
 
         if ($d > static::$daysInMonth[$m - 1]) {
             if (!($m == 12 && $d == 30 && $this->isInLeapYear())) {
-                throw new InvalidArgumentException();
+                throw new InvalidDateException($this);
             }
         }
     }
