@@ -170,8 +170,83 @@ class JalaliFormatter
     {
         return NumberToStringConverter::toOrdinalString($date->getWeekOfYear());
     }
+
     protected static function getWeekOfYear(JalaliDate $date)
     {
         return (string) $date->getWeekOfYear();
+    }
+
+    protected static function getLowerMeridiem(JDateTime $date)
+    {
+        return $date->getHour() < 12 ? 'am' : 'pm';
+    }
+
+    protected static function getHigherMeridiem(JDateTime $date)
+    {
+        return strtoupper(static::getLowerMeridiem($date));
+    }
+
+    protected static function getFarsiMeridiem(JDateTime $date)
+    {
+        return static::getLowerMeridiem($date) == 'am' ? 'ق.ظ' : 'ب.ظ';
+    }
+
+    protected static function getLongFarsiMeridiem(JDateTime $date)
+    {
+        return static::getLowerMeridiem($date) == 'am' ? 'قبل از ظهر' : 'بعد از ظهر';
+    }
+
+    protected static function get12Hour(JDateTime $date)
+    {
+        return (string) (($date->getHour() % 12) ?: 12);
+    }
+
+    protected static function get24Hour(JDateTime $date)
+    {
+        return (string) $date->getHour();
+    }
+
+    protected static function get2Digit12Hour(JDateTime $date)
+    {
+        $hour = static::get12Hour($date);
+        return strlen($hour) == 1 ? '0' . $hour : $hour;
+    }
+
+    protected static function get2Digit24Hour(JDateTime $date)
+    {
+        $hour = static::get24Hour($date);
+        return strlen($hour) == 1 ? '0' . $hour : $hour;
+    }
+
+    protected static function getMinutes(JDateTime $date)
+    {
+        $minute = (string)$date->getMinute();
+        return strlen($minute) == 1 ? '0' . $minute : $minute;
+    }
+
+    protected static function getSeconds(JDateTime $date)
+    {
+        $second = (string)$date->getSecond();
+        return strlen($second) == 1 ? '0' . $second : $second;
+    }
+
+    protected static function get12HourString(JDateTime $date)
+    {
+        return NumberToStringConverter::toString(static::get12Hour($date));
+    }
+
+    protected static function get24HourString(JDateTime $date)
+    {
+        return NumberToStringConverter::toString($date->getHour());
+    }
+
+    protected static function getMinuteString(JDateTime $date)
+    {
+        return NumberToStringConverter::toString($date->getMinute());
+    }
+
+    protected static function getSecondString(JDateTime $date)
+    {
+        return NumberToStringConverter::toString($date->getSecond());
     }
 }
