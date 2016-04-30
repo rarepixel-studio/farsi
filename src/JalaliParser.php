@@ -19,7 +19,6 @@ class JalaliParser
     ];
 
     protected static $timeConversionFunctions = [
-        'g' => 'parse12Hour',
         'h' => 'parse24Hour',
         'i' => 'parseMinute',
         's' => 'parseSecond',
@@ -34,7 +33,7 @@ class JalaliParser
      *
      * @throw InvalidDateException
      */
-    public static function createJalaliFromFormat($format, $date, $includeTime = false)
+        public static function createJalaliFromFormat($format, $date, $includeTime = false)
     {
         $dateParts = new DateParts();
         $regexp = '';
@@ -54,7 +53,7 @@ class JalaliParser
             } elseif (array_key_exists($function, static::$conversionFunctions)) {
                 $f = static::$conversionFunctions[$function];
                 $regexp .= '(' . static::$f($dateParts, $matchCount) . ')';
-            }elseif ($includeTime && array_key_exists($function, static::$timeConversionFunctions)) {
+            } elseif ($includeTime && array_key_exists($function, static::$timeConversionFunctions)) {
                 $f = static::$timeConversionFunctions[$function];
                 $regexp .= '(' . static::$f($dateParts, $matchCount) . ')';
             } else {
@@ -73,7 +72,7 @@ class JalaliParser
         }
         $dateParts->fillWithMatches($matches);
 
-        return $dateParts->createJalaliDate();
+        return $dateParts->createJalaliDate($includeTime);
     }
 
     /**
@@ -84,7 +83,7 @@ class JalaliParser
      *
      * @throw InvalidDateException
      */
-    public function createJDateTimeFromFormat($format, $date)
+    public static function createJDateTimeFromFormat($format, $date)
     {
         return static::createJalaliFromFormat($format, $date, true);
     }
@@ -136,6 +135,30 @@ class JalaliParser
 
         return '[الف-ی]*';
     }
+
+    protected static function parse24Hour(DateParts $dateParts, &$matchCount)
+    {
+        $matchCount++;
+        $dateParts->hour = $matchCount;
+
+        return '[0-9]{1,2}';
+    }
+
+    protected static function parseMinute(DateParts $dateParts, &$matchCount)
+    {
+        $matchCount++;
+        $dateParts->minute = $matchCount;
+
+        return '[0-9]{1,2}';
+    }
+
+    protected static function parseSecond(DateParts $dateParts, &$matchCount)
+    {
+        $matchCount++;
+        $dateParts->second = $matchCount;
+
+        return '[0-9]{1,2}';
+    }
 }
 
 class DateParts
@@ -162,6 +185,9 @@ class DateParts
     public $month;
     public $strMonth;
     public $dayOfYear;
+    public $hour = 0;
+    public $minute = 0;
+    public $second = 0;
 
     public function isAmbiguous()
     {
@@ -203,17 +229,34 @@ class DateParts
         if ($this->strMonth) {
             $this->strMonth = $matches[$this->strMonth];
         }
+        if ($this->hour) {
+            $this->hour = $matches[$this->hour];
+        }
+        if ($this->minute) {
+            $this->minute = $matches[$this->minute];
+        }
+        if ($this->second) {
+            $this->second = $matches[$this->second];
+        }
     }
 
-    public function createJalaliDate()
+    public function createJalaliDate($includeTime)
     {
         $y = $this->year ?: static::$defaultCentury + $this->yearOfCentury;
         if (!$this->hasNoMonth() && $this->day) {
-            return new JalaliDate($y, $this->getMonth(), $this->day);
-        }
-        $firstDay = new JalaliDate($y, 1, 1);
+            $date = new JalaliDate($y, $this->getMonth(), $this->day);
+        } else {
+            $firstDay = new JalaliDate($y, 1, 1);
 
-        return JalaliDate::fromInteger($firstDay->toInteger() - 1 + $this->dayOfYear);
+            $date = JalaliDate::fromInteger($firstDay->toInteger() - 1 + $this->dayOfYear);
+        }
+
+        if ($includeTime) {
+            return new JDateTime($date->getYear(), $date->getMonth(), $date->getDay(),
+                $this->hour, $this->minute, $this->second);
+        }
+
+        return $date;
     }
 
     protected function getMonth()

@@ -4,6 +4,7 @@ namespace OpiloTest\Farsi;
 
 use Opilo\Farsi\JalaliDate;
 use Opilo\Farsi\JalaliParser;
+use Opilo\Farsi\JDateTime;
 use PHPUnit_Framework_TestCase;
 
 class JalaliParserTest extends PHPUnit_Framework_TestCase
@@ -46,6 +47,7 @@ class JalaliParserTest extends PHPUnit_Framework_TestCase
             ['Y\/m\/d', '1394/12/20', 1394, 12, 20]
         ];
     }
+
     /**
      * @param $format
      * @param $date
@@ -59,5 +61,36 @@ class JalaliParserTest extends PHPUnit_Framework_TestCase
         $j1 = JalaliParser::createJalaliFromFormat($format, $date);
         $j2 = new JalaliDate($y, $m, $d);
         $this->assertEquals($j1, $j2);
+    }
+
+    public function provideJDateTimeFormats()
+    {
+        return [
+            ['Y/m/d h:i:s', '۱۳۹۴/۱۲/۲۰ 1:02:13', 1394, 12, 20, 1, 2, 13],
+            ['h:i:s Y/m/d', '1:02:13 ۱۳۹۴/۱۲/۲۰', 1394, 12, 20, 1, 2, 13],
+            ['Y/m/d h:i:s', '۱۳۹۴/۱۲/۲۰ 01:02:03', 1394, 12, 20, 1, 2, 3],
+            ['Y/m/d h', '1394/02/03 23', 1394, 2, 3, 23, 0, 0],
+            ['Y/m/d', '1394/1/2', 1394, 1, 2, 0, 0, 0],
+        ];
+    }
+
+    /**
+     * @param $format
+     * @param $date
+     * @param $y
+     * @param $m
+     * @param $d
+     * @param $h
+     * @param $i
+     * @param $s
+     * @dataProvider provideJDateTimeFormats
+     */
+    public function test_format_string_to_JDateTime($format, $date, $y, $m, $d, $h, $i, $s)
+    {
+        $j1 = JalaliParser::createJalaliFromFormat($format, $date, true);
+        $j2 = JalaliParser::createJDateTimeFromFormat($format, $date);
+        $j3 = new JDateTime($y, $m, $d, $h, $i, $s);
+        $this->assertEquals($j3, $j1);
+        $this->assertEquals($j3, $j2);
     }
 }
