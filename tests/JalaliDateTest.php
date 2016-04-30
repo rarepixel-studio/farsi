@@ -2,7 +2,9 @@
 
 namespace OpiloTest\Farsi;
 
+use Opilo\Farsi\DateConverter;
 use Opilo\Farsi\JalaliDate;
+use Opilo\Farsi\JDateTime;
 use PHPUnit_Framework_TestCase;
 
 class JalaliDateTest extends PHPUnit_Framework_TestCase
@@ -436,17 +438,15 @@ class JalaliDateTest extends PHPUnit_Framework_TestCase
         date_default_timezone_set('Asia/Tehran');
         $jDate = new JalaliDate('1394', '9', '9');
         $this->assertEquals('2015-11-30 00:00:00.000000 Asia/Tehran', $jDate->toDateTime()->format('Y-m-d H:i:s.u e'));
+        $this->assertEquals('2015-11-30 00:00:00.000000 Asia/Tehran', DateConverter::jalaliToDateTime($jDate)->format('Y-m-d H:i:s.u e'));
         date_default_timezone_set($zone);
     }
 
     public function test_convert_to_date_time_with_time_being_set()
     {
-        $zone = date_default_timezone_get();
-        date_default_timezone_set('Asia/Tehran');
-        $jDate = new JalaliDate('1394', '9', '9');
-        $time = \DateTime::createFromFormat('H:i:s.u e', '15:25:56.123456 UTC');
-        $this->assertEquals('2015-11-30 15:25:56.123456 UTC', $jDate->toDateTime($time)->format('Y-m-d H:i:s.u e'));
-        date_default_timezone_set($zone);
+        $jDate = new JDateTime('1394', '9', '9', 15, 25, 56);
+        $this->assertEquals('2015-11-30 15:25:56', $jDate->toDateTime()->format('Y-m-d H:i:s'));
+        $this->assertEquals('2015-11-30 15:25:56', DateConverter::jalaliToDateTime($jDate)->format('Y-m-d H:i:s'));
     }
 
     public function _testS()
