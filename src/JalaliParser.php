@@ -36,7 +36,7 @@ class JalaliParser
         $functions = str_split($format);
         foreach ($functions as $function) {
             if ($escaped) {
-                $regexp .= preg_quote($function);
+                $regexp .= preg_quote($function, '/');
                 $escaped = false;
             } elseif ($function === '\\') {
                 $escaped = true;
@@ -44,13 +44,11 @@ class JalaliParser
                 $regexp .= '.';
             } elseif ($function === '*') {
                 $regexp .= '.*';
-            } elseif ($function === '/') {
-                $regexp .= '\\/';
             } elseif (array_key_exists($function, static::$conversionFunctions)) {
                 $f = static::$conversionFunctions[$function];
                 $regexp .= '(' . static::$f($dateParts, $matchCount) . ')';
             } else {
-                $regexp .= preg_quote($function);
+                $regexp .= preg_quote($function, '/');
             }
         }
 
