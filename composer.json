@@ -13,8 +13,14 @@
     "php": ">=5.4"
   },
   "require-dev": {
+    "illuminate/validation": "^4.2||^5",
+    "illuminate/translation": "^4.2||^5",
+    "illuminate/filesystem": "^4.2||^5",
     "phpunit/phpunit": "4.*",
     "sallar/jdatetime": "dev-master"
+  },
+  "suggest": {
+    "laravel/framework": "This package provides validation facilities for the Laravel Framework (^4.2||^5),"
   },
   "autoload": {
     "psr-4": {

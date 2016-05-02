@@ -6,7 +6,7 @@
 [![Latest Unstable Version](https://poser.pugx.org/opilo/farsi/v/unstable)](https://packagist.org/packages/opilo/farsi)
 [![License](https://poser.pugx.org/opilo/farsi/license)](https://packagist.org/packages/opilo/farsi)
 
-This package provides Farsi tools for PHP developers.
+This package provides Farsi tools for PHP developers. Specially, it has validation facilities for Laravel developers.
 ## Jalali (Higri Shamsi) Date
 The `JalaliDate` class represents Iranian calendar. It calculates leap years based on data referenced in [this wiki page](https://fa.wikipedia.org/wiki/گاه‌شماری_رسمی_ایران).
 According to the tests done in `tests/SallarJdatetimeTest.php`, for years between 1343 and 1473, the leap years in this calendar perfectly match those of `calculated` leap years based on the proposed calculation rules.
@@ -94,6 +94,89 @@ This will (approximately) output:
     ۱۳۹۴
     1394
     کیک پی اچ پی چیز خاصی نیست
+
+## Jalali Validator For Laravel 4.2 and Laravel 5
+
+### Installation
+
+#### Step 1: Add the Service Provider
+
+Add the provider class to the array of providers in config/app.php file
+
+```php
+	'providers' => [
+	    ...
+        Opilo\Farsi\Laravel\JalaliServiceProvider::class,
+	]
+```
+
+#### Step 2: Define the Error Messages
+
+You need to define error messages for `jalali`, `jalali_after`, and `jalali_before` rules in validation.php in lang folders. Samples to copy & paste are provided under sample-lang directory of this package.
+For example, if your project uses Laravel 5 and your Farsi ranslation are under `resources/lang/fa` directory, copy these lines to `resources/lang/fa/validation.php`:
+
+```php
+    'jalali'        => ':attribute وارد شده تاریخ شمسی معتبری طبق فرمت :format نیست (مثال معتبر: :fa-sample).',
+    'jalali_after'  => ':attribute وارد شده باید یک تاریخ شمسی معتبر بعد از :date باشد.',
+    'jalali_before' => ':attribute وارد شده باید یک تاریخ شمسی معتبر قبل از :date باشد.',
+    ...
+    //the rest of Farsi translations for validation rules.
+
+    'attributes' => [
+        'birth_date' => 'تاریخ تولد',
+        ...
+        //the rest of Farsi translations for attributes
+    ],
+    ...
+```
+
+### Validation Rules
+
+#### jalali:Y/m/d
+
+Determines if an input is a valid Jalali date with the specified format. The default format is Y/m/d.
+
+#### jalali_after:1380/1/1,Y/m/d
+
+Determines if an input is a valid Jalali date with the specified format and it is after a given date. The default format is Y/m/d and the default date is today.
+
+#### jalali_before:1395-01-01,Y-m-d
+
+Determines if an input is a valid Jalali date with the specified format and it is before a given date. The default format is Y/m/d and the default date is today.
+
+### Examples
+
+Thanks to Laravel 5, you may use the mentioned validation rules inside rule() function of your domain specific Request objects.
+If that is not an option, you can use the rules, just like any other Laravel rules with codes like the following:
+
+```php
+    $v = Validator::make([
+            'birth_date' => '1380/01/32'
+        ],
+        [
+            'birth_date' => 'required|jalali|jalali_before:1381/01/01|jalali_after:1300/01/01,Y/m/d'
+        ]);
+
+    if ($v->fails()) {
+        var_dump($v->messages()->toArray());
+    }
+```
+
+The output of the code above will be:
+
+```php
+array(1) {
+  ["birth_date"]=>
+  array(3) {
+    [0]=>
+    string(140) "تاریخ تولد وارد شده تاریخ شمسی معتبری طبق فرمت Y/m/d نیست (مثال معتبر: ۱۳۹۴/۹/۱۳)."
+    [1]=>
+    string(113) "تاریخ تولد وارد شده باید یک تاریخ شمسی معتبر قبل از 1381/01/01 باشد."
+    [2]=>
+    string(113) "تاریخ تولد وارد شده باید یک تاریخ شمسی معتبر بعد از 1300/01/01 باشد."
+  }
+}
+```
 
 ## License
 
