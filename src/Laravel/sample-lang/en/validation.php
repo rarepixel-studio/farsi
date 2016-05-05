@@ -12,5 +12,5 @@ return [
         'birth_date' => [
             'jalali' => 'Please provide a valid birth date according to the Jalali Calendar.',
         ],
-    ]
+    ],
 ];

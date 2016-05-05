@@ -10,7 +10,6 @@ use Illuminate\Validation\Factory;
 use Opilo\Farsi\JDateTime;
 use Opilo\Farsi\Laravel\JalaliValidator;
 use Opilo\Farsi\JalaliDate;
-use Opilo\Farsi\StringCleaner;
 use PHPUnit_Framework_TestCase;
 
 class FarsiServiceProviderTest extends PHPUnit_Framework_TestCase
@@ -124,7 +123,7 @@ class FarsiServiceProviderTest extends PHPUnit_Framework_TestCase
                 'j_date_2' => '1394-9-12 13:21',
             ],
             [
-                'j_date_1' => 'required|jdatetime|jdatetime_after:"1395/2/16 12:55:41"|jdatetime_before:"1395/2/16 12:56:00"',
+                'j_date_1' => 'required|jdatetime|jdatetime_after:"1395/2/16 12:55:41"|jdatetime_before:"1395/2/17 12:56:00"',
                 'j_date_2' => 'required|jdatetime:"Y-m-d h:i"|jdatetime_after:"1394-9-12 13:20","Y-m-d h:i"',
             ]
         );
@@ -140,7 +139,7 @@ class FarsiServiceProviderTest extends PHPUnit_Framework_TestCase
             [
                 'birth_date'      => '1394/9/32',
                 'graduation_date' => '1394-9-32',
-                'start_time'      => 'foo'
+                'start_time'      => ['foo'],
             ],
             [
                 'birth_date'      => 'required|jalali',
@@ -175,12 +174,12 @@ class FarsiServiceProviderTest extends PHPUnit_Framework_TestCase
             [
                 'graduation_date' => 'foo',
                 'birth_date'      => 'bar',
-                'start_time'      => 'baz'
+                'start_time'      => ['baz'],
             ],
             [
                 'graduation_date' => 'required|jalali:y/M/d',
                 'birth_date'      => 'required|jalali',
-                'start_time'      => 'jdatetime|jdatetime:"Y/m/d h:i"',
+                'start_time'      => 'jdatetime|jdatetime:"Y/m/d h:i"|jdatetime_after:"1400/11/12 13:14","Y/m/d h:i"',
             ]
         );
 
@@ -196,6 +195,7 @@ class FarsiServiceProviderTest extends PHPUnit_Framework_TestCase
             'start_time' => [
                 'start time وارد شده زمان معتبری طبق فرمت Y/m/d h:i:s نیست (مثال معتبر: ۱۳۹۵/۲/۱۳ ۴:۵:۶).',
                 'start time وارد شده زمان معتبری طبق فرمت Y/m/d h:i نیست (مثال معتبر: ۱۳۹۵/۲/۱۳ ۴:۵).',
+                'start time وارد شده باید زمان معتبری بعد از ۱۴۰۰/۱۱/۱۲ ۱۳:۱۴ باشد.',
             ],
         ], $validator->messages()->toArray());
 
@@ -238,7 +238,7 @@ class FarsiServiceProviderTest extends PHPUnit_Framework_TestCase
 
         $this->assertTrue($validator->fails());
 
-        $this->assertStringStartsWith("The start time must be a Jalali date-time before", $validator->messages()->toArray()['start_time'][1]);
+        $this->assertStringStartsWith('The start time must be a Jalali date-time before', $validator->messages()->toArray()['start_time'][1]);
         $this->assertEquals(
             'The start time does not match Jalali date-time format Y/m/d h:i:s. A sample valid Jalali date-time would be "1395/2/17 15:30:40".',
             $validator->messages()->toArray()['start_time'][0]);
@@ -271,7 +271,7 @@ class FarsiServiceProviderTest extends PHPUnit_Framework_TestCase
             ],
             'start_time' => [
                 "start time وارد شده باید زمان معتبری بعد از $faTime باشد.",
-            ]
+            ],
         ], $validator->messages()->toArray());
     }
 

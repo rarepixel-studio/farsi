@@ -27,7 +27,7 @@ class JalaliParser
     /**
      * @param string $format
      * @param string $date
-     * @param bool $includeTime
+     * @param bool   $includeTime
      *
      * @return JalaliDate|JDateTime
      *

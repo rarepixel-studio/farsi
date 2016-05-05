@@ -49,6 +49,7 @@ class DateConverter
         $firstDay = new GeorgianDate(622, 3, 22);
 
         $jDate = JalaliDate::fromInteger($georgian->toInteger() - $firstDay->toInteger() + 1);
+
         return new JDateTime($jDate->getYear(), $jDate->getMonth(), $jDate->getDay(),
             $dateTime->format('H'), $dateTime->format('i'), $dateTime->format('s'));
     }
@@ -68,6 +69,7 @@ class DateConverter
         if ($jDate instanceof JDateTime) {
             $dateTime->setTime($jDate->getHour(), $jDate->getMinute(), $jDate->getSecond());
         }
+
         return $dateTime;
     }
 

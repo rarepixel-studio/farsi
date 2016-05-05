@@ -51,8 +51,8 @@ class JalaliFormatter
 
     /**
      * @param JalaliDate|JDateTime $date
-     * @param string     $format
-     * @param bool       $farsiDigits whether to convert english digits to farsi
+     * @param string               $format
+     * @param bool                 $farsiDigits whether to convert english digits to farsi
      *
      * @return string
      */
@@ -209,24 +209,28 @@ class JalaliFormatter
     protected static function get2Digit12Hour(JDateTime $date)
     {
         $hour = static::get12Hour($date);
+
         return strlen($hour) == 1 ? '0' . $hour : $hour;
     }
 
     protected static function get2Digit24Hour(JDateTime $date)
     {
         $hour = static::get24Hour($date);
+
         return strlen($hour) == 1 ? '0' . $hour : $hour;
     }
 
     protected static function getMinutes(JDateTime $date)
     {
-        $minute = (string)$date->getMinute();
+        $minute = (string) $date->getMinute();
+
         return strlen($minute) == 1 ? '0' . $minute : $minute;
     }
 
     protected static function getSeconds(JDateTime $date)
     {
-        $second = (string)$date->getSecond();
+        $second = (string) $date->getSecond();
+
         return strlen($second) == 1 ? '0' . $second : $second;
     }
 

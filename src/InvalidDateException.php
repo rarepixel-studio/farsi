@@ -13,12 +13,12 @@ class InvalidDateException extends InvalidArgumentException
     protected $date;
 
     /**
-     * @param Date|string $date
-     * @param string $message
-     * @param int $code
+     * @param Date|string    $date
+     * @param string         $message
+     * @param int            $code
      * @param Exception|null $previous
      */
-    public function __construct($date, $message = "", $code = 0, Exception $previous = null)
+    public function __construct($date, $message = '', $code = 0, Exception $previous = null)
     {
         $this->date = $date;
         parent::__construct($message, $code, $previous);

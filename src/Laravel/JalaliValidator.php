@@ -126,6 +126,7 @@ class JalaliValidator
             if ($dateCompare) {
                 return $dateCompare;
             }
+
             return $jDateTime->secondsSinceMidnight() - $baseDate->secondsSinceMidnight();
         } catch (\Exception $e) {
             return false;
@@ -162,7 +163,7 @@ class JalaliValidator
 
     protected function getSample($format, $rule)
     {
-        $includeTime = ! preg_match('/^jalali/', $rule);
+        $includeTime = !preg_match('/^jalali/', $rule);
         $date = $includeTime ? static::getSampleDateTime() : static::getSampleDate();
 
         $functions = str_split($format);
@@ -236,6 +237,7 @@ class JalaliValidator
     /**
      * @param string $format
      * @param string $rule
+     *
      * @return string
      */
     protected function defaultSampleDate($format, $rule)

@@ -12,6 +12,7 @@ class JDateTimeTest extends PHPUnit_Framework_TestCase
     public function provideInvalidJDateTime()
     {
         return [
+            [1395, 12, 31, 1, 1, 2],
             [1395, 1, 16, -1, 1, 2],
             [1395, 1, 16, 24, 1, 2],
             [1395, 1, 16, 1, -1, 2],
@@ -42,7 +43,7 @@ class JDateTimeTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param DateTime $dateTime
+     * @param DateTime  $dateTime
      * @param JDateTime $jDateTime
      *
      * @dataProvider provideDateTimeJDateTime
