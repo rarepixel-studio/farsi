@@ -2,6 +2,8 @@
 
 namespace Opilo\Farsi;
 
+use DateTime;
+
 class JDateTime extends JalaliDate
 {
     protected $hour;
@@ -20,7 +22,28 @@ class JDateTime extends JalaliDate
     }
 
     /**
-     * @return mixed
+     * @param DateTime $dateTime
+     *
+     * @return static
+     */
+    public static function fromDateTime(DateTime $dateTime)
+    {
+        return DateConverter::dateTimeToJDateTime($dateTime);
+    }
+
+    /**
+     * @param string $format
+     * @param string $strDate
+     *
+     * @return static
+     */
+    public static function fromFormat($format, $strDate)
+    {
+        return JalaliParser::createJDateTimeFromFormat($format, $strDate);
+    }
+
+    /**
+     * @return int
      */
     public function getHour()
     {
@@ -28,7 +51,7 @@ class JDateTime extends JalaliDate
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getMinute()
     {
@@ -36,11 +59,19 @@ class JDateTime extends JalaliDate
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getSecond()
     {
         return $this->second;
+    }
+
+    /**
+     * @return int
+     */
+    public function secondsSinceMidnight()
+    {
+        return $this->getSecond() + 60 * ($this->getMinute() + 60 * $this->getHour());
     }
 
     protected function validateTime()

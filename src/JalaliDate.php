@@ -214,7 +214,7 @@ class JalaliDate extends Date
     /**
      * @param DateTime $dateTime
      *
-     * @return JalaliDate
+     * @return static
      */
     public static function fromDateTime(DateTime $dateTime)
     {
@@ -225,7 +225,7 @@ class JalaliDate extends Date
      * @param string $format
      * @param string $strDate
      *
-     * @return JalaliDate
+     * @return static
      */
     public static function fromFormat($format, $strDate)
     {

@@ -37,6 +37,23 @@ class DateConverter
     }
 
     /**
+     * Converts a DateTime object to corresponding JalaliDate object.
+     *
+     * @param DateTime $dateTime
+     *
+     * @return JDateTime
+     */
+    public static function dateTimeToJDateTime(DateTime $dateTime)
+    {
+        $georgian = static::dateTimeToGeorgian($dateTime);
+        $firstDay = new GeorgianDate(622, 3, 22);
+
+        $jDate = JalaliDate::fromInteger($georgian->toInteger() - $firstDay->toInteger() + 1);
+        return new JDateTime($jDate->getYear(), $jDate->getMonth(), $jDate->getDay(),
+            $dateTime->format('H'), $dateTime->format('i'), $dateTime->format('s'));
+    }
+
+    /**
      * @param JalaliDate|JDateTime $jDate
      *
      * @return DateTime

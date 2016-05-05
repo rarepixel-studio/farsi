@@ -54,6 +54,7 @@ class JalaliParserTest extends PHPUnit_Framework_TestCase
      * @param $y
      * @param $m
      * @param $d
+     *
      * @dataProvider provideFormats
      */
     public function test_format_string_to_JalaliDate($format, $date, $y, $m, $d)
@@ -83,6 +84,7 @@ class JalaliParserTest extends PHPUnit_Framework_TestCase
      * @param $h
      * @param $i
      * @param $s
+     *
      * @dataProvider provideJDateTimeFormats
      */
     public function test_format_string_to_JDateTime($format, $date, $y, $m, $d, $h, $i, $s)
@@ -90,7 +92,9 @@ class JalaliParserTest extends PHPUnit_Framework_TestCase
         $j1 = JalaliParser::createJalaliFromFormat($format, $date, true);
         $j2 = JalaliParser::createJDateTimeFromFormat($format, $date);
         $j3 = new JDateTime($y, $m, $d, $h, $i, $s);
+        $j4 = JDateTime::fromFormat($format, $date);
         $this->assertEquals($j3, $j1);
         $this->assertEquals($j3, $j2);
+        $this->assertEquals($j3, $j4);
     }
 }

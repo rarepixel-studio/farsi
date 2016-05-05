@@ -33,7 +33,7 @@ class JalaliParser
      *
      * @throw InvalidDateException
      */
-        public static function createJalaliFromFormat($format, $date, $includeTime = false)
+    public static function createJalaliFromFormat($format, $date, $includeTime = false)
     {
         $dateParts = new DateParts();
         $regexp = '';
