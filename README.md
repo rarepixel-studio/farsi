@@ -56,6 +56,9 @@ The output of the code above, is: **جمعه، ۲۰ شهریور ۹۴**
 
 Note that if you try to construct an invalid `JalaliDate`, an `InvalidArgumentException` will be thrown.
 
+### JDateTime class
+The `JDateTime` class is an extension of `JalaliDate` class with time (hour, minute, second) support.
+
 ## Number to String Converter
 If your application is supposed to print financial documents, you probably love this:
 
@@ -134,15 +137,27 @@ For example, if your project uses Laravel 5 and your Farsi ranslation are under 
 
 #### jalali:Y/m/d
 
-Determines if an input is a valid Jalali date with the specified format. The default format is Y/m/d.
+Determines if an input is a valid Jalali date with the specified format. The default format is `Y/m/d`.
 
 #### jalali_after:1380/1/1,Y/m/d
 
-Determines if an input is a valid Jalali date with the specified format and it is after a given date. The default format is Y/m/d and the default date is today.
+Determines if an input is a valid Jalali date with the specified format and it is after a given date. The default format is `Y/m/d` and the default date is today.
 
 #### jalali_before:1395-01-01,Y-m-d
 
-Determines if an input is a valid Jalali date with the specified format and it is before a given date. The default format is Y/m/d and the default date is today.
+Determines if an input is a valid Jalali date with the specified format and it is before a given date. The default format is `Y/m/d` and the default date is today.
+
+#### jdatetime:"Y/m/d h:i:s"
+
+Determines if an input is a valid Jalali date-time with the specified format. The default format is `Y/m/d h:i:s`.
+
+#### jdatetime_after:"1380/1/1 12:00:00","Y/m/d h:i:s"
+
+Determines if an input is a valid Jalali date-time with the specified format and it is after a given date-time. The default format is `Y/m/d h:i:s` and the default time is now.
+
+#### jdatetime_before:"1395-01-01 h:i","Y-m-d h:i"
+
+Determines if an input is a valid Jalali date-time with the specified format and it is before a given date-time. The default format is `Y/m/d h:i:s` and the default time is now.
 
 ### Examples
 
@@ -151,10 +166,12 @@ If that is not an option, you can use the rules, just like any other Laravel rul
 
 ```php
     $v = Validator::make([
-            'birth_date' => '1380/01/32'
+            'birth_date' => '1380/01/32',
+            'start_time' => '1395/02/16 12:10:00',
         ],
         [
-            'birth_date' => 'required|jalali|jalali_before:1381/01/01|jalali_after:1300/01/01,Y/m/d'
+            'birth_date' => 'required|jalali|jalali_before:1381/01/01|jalali_after:1300/01/01,Y/m/d',
+            'start_time' => 'required|jdatetime_after:"1395/01/01 00:00:00"|jdatetime_before:"1396/01/01 00:00:00"',
         ]);
 
     if ($v->fails()) {
