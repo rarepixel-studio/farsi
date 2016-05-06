@@ -6,7 +6,8 @@
 [![Latest Unstable Version](https://poser.pugx.org/opilo/farsi/v/unstable)](https://packagist.org/packages/opilo/farsi)
 [![License](https://poser.pugx.org/opilo/farsi/license)](https://packagist.org/packages/opilo/farsi)
 
-This package provides Farsi tools for PHP developers. Specially, it has validation facilities for Laravel developers.
+This package provides Farsi tools for PHP developers. It also introduce validation facilities specially designed for Laravel developers.
+
 ## Jalali (Higri Shamsi) Date
 The `JalaliDate` class represents Iranian calendar. It calculates leap years based on data referenced in [this wiki page](https://fa.wikipedia.org/wiki/گاه‌شماری_رسمی_ایران).
 According to the tests done in `tests/SallarJdatetimeTest.php`, for years between 1343 and 1473, the leap years in this calendar perfectly match those of `calculated` leap years based on the proposed calculation rules.

@@ -1,6 +1,6 @@
 {
   "name": "opilo/farsi",
-  "description": "Farsi Tools for Dates and Numbers and Strings",
+  "description": "Farsi Tools for Dates and Numbers and Strings (with Laravel Validation Support)",
   "keywords": ["Jalali", "Shamsi", "Farsi", "Persian"],
   "license": "MIT",
   "authors": [
