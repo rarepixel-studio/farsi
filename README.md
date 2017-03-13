@@ -110,7 +110,7 @@ Add the provider class to the array of providers in config/app.php file
 ```php
 	'providers' => [
 	    ...
-        Opilo\Farsi\Laravel\JalaliServiceProvider::class,
+        Opilo\Farsi\Laravel\FarsiServiceProvider::class,
 	]
 ```
 
