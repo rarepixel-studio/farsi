@@ -382,7 +382,7 @@ class JalaliDate extends Date
     public function lastDayOfWeek()
     {
         $daysInYear = $this->isInLeapYear() ? 366 : 365;
-        if (( $this->dayOfYear() + ( 7 - $this->getWeekDay() ) ) > $daysInYear) {
+        if (( $this->dayOfYear() + ( 6 - $this->getWeekDay() ) ) > $daysInYear) {
             return new static($this->getYear() + 1, 1, ( 6 - $this->getWeekDay() - ( $daysInYear - $this->dayOfYear() ) ));
         }
         return new static($this->getYear(), $this->getMonth(), $this->getDay() + ( 6 - $this->getWeekDay() ));
