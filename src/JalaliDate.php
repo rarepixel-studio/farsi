@@ -351,4 +351,40 @@ class JalaliDate extends Date
 
         return (int) (($y - $nHops) / 4);
     }
+    
+    
+
+    public function firstDayOfMonth()
+    {
+        return new static($this->getYear(), $this->getMonth(), 1);
+    }
+
+
+    public function lastDayOfMonth()
+    {
+        return new static($this->getYear(), $this->getMonth(), self::$daysInMonth[$this->getMonth()]);
+
+    }
+
+
+    public function firstDayOfWeek()
+    {
+        if($this->dayOfYear() <= $this->getWeekDay()){
+            $daysInPerviousEsfand = self::isLeapYear($this->getYear() - 1) ? 30 : 29;
+            $NumOfDaysLeftPerviousYear =  $this->getWeekDay() - $this->dayOfYear() + 1;
+            return new static($this->getYear() -1 , 12, $daysInPerviousEsfand - $NumOfDaysLeftPerviousYear + 1);
+        }
+
+        return new static($this->getYear(), $this->getMonth(), $this->getDay() - $this->getWeekDay());
+    }
+
+
+    public function lastDayOfWeek()
+    {
+        $daysInYear = $this->isInLeapYear() ? 366 : 365;
+        if (( $this->dayOfYear() + ( 7 - $this->getWeekDay() ) ) > $daysInYear) {
+            return new static($this->getYear() + 1, 1, ( 6 - $this->getWeekDay() - ( $daysInYear - $this->dayOfYear() ) ));
+        }
+        return new static($this->getYear(), $this->getMonth(), $this->getDay() + ( 6 - $this->getWeekDay() ));
+    }
 }
