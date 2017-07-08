@@ -362,8 +362,8 @@ class JalaliDate extends Date
 
     public function lastDayOfMonth()
     {
-        return new static($this->getYear(), $this->getMonth(), self::$daysInMonth[$this->getMonth()]);
-
+        $lastDay = ($this->getMonth() == 12 && $this->isInLeapYear()) ? 30 :  self::$daysInMonth[$this->getMonth() - 1];
+        return new static($this->getYear(), $this->getMonth(), $lastDay);
     }
 
 
