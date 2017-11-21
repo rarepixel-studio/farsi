@@ -367,19 +367,19 @@ class JalaliDate extends Date
     }
 
 
-    public function firstDayOfWeek(JalaliDate $faDate)
+    public function firstDayOfWeek()
     {
-        $faDateInt   = $faDate->toInteger();
-        $firstDayInt = $faDateInt - $faDate->getWeekDay();
+        $faDateInt   = $this->toInteger();
+        $firstDayInt = $faDateInt - $this->getWeekDay();
 
         return JalaliDate::fromInteger($firstDayInt);
     }
 
 
-    public function lastDayOfWeek(JalaliDate $faDate)
+    public function lastDayOfWeek()
     {
-        $faDateInt      = $faDate->toInteger();
-        $lastWeekDayInt = $faDateInt + ( 6 - $faDate->getWeekDay() );
+        $faDateInt      = $this->toInteger();
+        $lastWeekDayInt = $faDateInt + ( 6 - $this->getWeekDay() );
 
         return JalaliDate::fromInteger($lastWeekDayInt);
     }
