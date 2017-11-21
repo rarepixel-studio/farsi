@@ -367,24 +367,20 @@ class JalaliDate extends Date
     }
 
 
-    public function firstDayOfWeek()
+    public function firstDayOfWeek(JalaliDate $faDate)
     {
-        if($this->dayOfYear() <= $this->getWeekDay()){
-            $daysInPerviousEsfand = self::isLeapYear($this->getYear() - 1) ? 30 : 29;
-            $NumOfDaysLeftPerviousYear =  $this->getWeekDay() - $this->dayOfYear() + 1;
-            return new static($this->getYear() -1 , 12, $daysInPerviousEsfand - $NumOfDaysLeftPerviousYear + 1);
-        }
+        $faDateInt   = $faDate->toInteger();
+        $firstDayInt = $faDateInt - $faDate->getWeekDay();
 
-        return new static($this->getYear(), $this->getMonth(), $this->getDay() - $this->getWeekDay());
+        return JalaliDate::fromInteger($firstDayInt);
     }
 
 
-    public function lastDayOfWeek()
+    public function lastDayOfWeek(JalaliDate $faDate)
     {
-        $daysInYear = $this->isInLeapYear() ? 366 : 365;
-        if (( $this->dayOfYear() + ( 6 - $this->getWeekDay() ) ) > $daysInYear) {
-            return new static($this->getYear() + 1, 1, ( 6 - $this->getWeekDay() - ( $daysInYear - $this->dayOfYear() ) ));
-        }
-        return new static($this->getYear(), $this->getMonth(), $this->getDay() + ( 6 - $this->getWeekDay() ));
+        $faDateInt      = $faDate->toInteger();
+        $lastWeekDayInt = $faDateInt + ( 6 - $faDate->getWeekDay() );
+
+        return JalaliDate::fromInteger($lastWeekDayInt);
     }
 }
