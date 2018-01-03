@@ -367,6 +367,90 @@ class JalaliDate extends Date
     }
 
 
+       public function subMonth($int)
+    {
+        $year  = $this->getYear();
+        $month = $this->getMonth();
+        $day   = $this->getDay();
+
+        $numberOfYears   = (int) floor($int / 12);
+        $numberOfMonthes = $int - ( $numberOfYears * 12 );
+
+        $newYear = $year - $numberOfYears;
+
+        if ($this->getMonth() <= $numberOfMonthes) {
+            $newYear  -= 1;
+            $newMonth = 12 - ( $numberOfMonthes - $this->getMonth() );
+        } else {
+            $newMonth = $this->getMonth() - $numberOfMonthes;
+        }
+
+        $newDay = ( $day > $this->getDaysInMonth($newMonth) ) ? $this->getDaysInMonth($newMonth) : $day;
+
+        if ($newMonth == 12 && $newDay == 29 & $this->isLeapYear($newYear)) {
+            $newDay = 30;
+        }
+
+        return new static($newYear, $newMonth, $newDay);
+    }
+
+
+    public function addMonth($int)
+    {
+        $year  = $this->getYear();
+        $month = $this->getMonth();
+        $day   = $this->getDay();
+
+        $numberOfYears   = (int) floor($int / 12);
+        $numberOfMonthes = $int - ( $numberOfYears * 12 );
+
+        $newYear = $year + $numberOfYears;
+
+        if ($this->getMonth() + $numberOfMonthes > 12) {
+            $newYear  += 1;
+            $newMonth = $numberOfMonthes + $this->getMonth() - 12;
+        } else {
+            $newMonth = $this->getMonth() + $numberOfMonthes;
+        }
+
+        $newDay = ( $day > $this->getDaysInMonth($newMonth) ) ? $this->getDaysInMonth($newMonth) : $day;
+
+        if ($newMonth == 12 && $newDay == 29 & $this->isLeapYear($newYear)) {
+            $newDay = 30;
+        }
+
+        return new static($newYear, $newMonth, $newDay);
+    }
+
+
+    public function addYear($int)
+    {
+        $newYear  = $this->getYear() + $int;
+        $newMonth = $this->getMonth();
+        $newDay   = $this->getDay();
+
+        if ($newMonth == 12 && $newDay == 30 && ! $this->isLeapYear($newYear)) {
+            $newDay = 29;
+        }
+
+        return new static($newYear, $newMonth, $newDay);
+    }
+
+
+    public function subYear($int)
+    {
+        $newYear  = $this->getYear() - $int;
+        $newMonth = $this->getMonth();
+        $newDay   = $this->getDay();
+
+        if ($newMonth == 12 && $newDay == 30 && ! $this->isLeapYear($newYear)) {
+            $newDay = 29;
+        }
+
+        return new static($newYear, $newMonth, $newDay);
+    }
+
+
     public function firstDayOfWeek()
     {
         $faDateInt   = $this->toInteger();
@@ -382,5 +466,19 @@ class JalaliDate extends Date
         $lastWeekDayInt = $faDateInt + ( 6 - $this->getWeekDay() );
 
         return JalaliDate::fromInteger($lastWeekDayInt);
+    }
+
+
+    public function firstDayOfYear()
+    {
+        return new static($this->getYear(), 1, 1);
+    }
+
+
+    public function lastDayOfYear()
+    {
+        $lastDay = $this->isInLeapYear()  ? 30 : 29;
+
+        return new static($this->getYear(), 12, $lastDay);
     }
 }
