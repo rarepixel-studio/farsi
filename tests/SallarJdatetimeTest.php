@@ -8,12 +8,12 @@ use jDateTime;
 use Opilo\Farsi\JalaliDate;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @test
+ * @group brute_force
+ */
 class SallarJdatetimeTest extends TestCase
 {
-    /**
-     * @test
-     * @group brute_force
-     */
     public function brute_force_test_against_sallar_jdatetime()
     {
         $firstDate = (new JalaliDate(1343, 1, 1))->toDateTime();

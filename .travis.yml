@@ -13,7 +13,7 @@ env:
 
 matrix:
   include:
-    - php: 7.4
+    - php: 7.3
       env: brute_force=yes
     - php: 7.1
       env: setup=lowest
