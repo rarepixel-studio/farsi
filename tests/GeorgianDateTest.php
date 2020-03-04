@@ -3,9 +3,9 @@
 namespace OpiloTest\Farsi;
 
 use Opilo\Farsi\GeorgianDate;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class GeorgianDateTest extends PHPUnit_Framework_TestCase
+class GeorgianDateTest extends TestCase
 {
     public function test_day_of_year()
     {

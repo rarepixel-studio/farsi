@@ -6,9 +6,9 @@ use DateInterval;
 use DatePeriod;
 use jDateTime;
 use Opilo\Farsi\JalaliDate;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class SallarJdatetimeTest extends PHPUnit_Framework_TestCase
+class SallarJdatetimeTest extends TestCase
 {
     /**
      * @test

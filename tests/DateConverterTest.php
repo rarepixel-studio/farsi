@@ -3,16 +3,18 @@
 namespace OpiloTest\Farsi;
 
 use Opilo\Farsi\DateConverter;
+use Opilo\Farsi\InvalidDateException;
 use Opilo\Farsi\JalaliDate;
+use PHPUnit\Framework\TestCase;
 
-class DateConverterTest extends \PHPUnit_Framework_TestCase
+class DateConverterTest extends TestCase
 {
     /**
      * @var DateConverter
      */
     private $converter;
 
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
         $this->converter = new DateConverter();
@@ -211,20 +213,17 @@ class DateConverterTest extends \PHPUnit_Framework_TestCase
         $this->_test_2_Way_conversion('2100-3-20', $farthest->getYear(), $farthest->getMonth(), $farthest->getDay());
     }
 
-    /**
-     * @expectedException \Opilo\Farsi\InvalidDateException
-     */
     public function test_convert_to_days_after_farthest_supported_day_fails()
     {
         $farthest = JalaliDate::getFarthestSupportedDate();
+        $this->expectException(InvalidDateException::class);
         $this->_test_2_Way_conversion('2100-3-21', $farthest->getYear() + 1, 1, 1);
     }
 
-    /**
-     * @expectedException \Opilo\Farsi\InvalidDateException
-     */
     public function test_convert_to_days_before_day_one_fails()
     {
+        $farthest = JalaliDate::getFarthestSupportedDate();
+        $this->expectException(InvalidDateException::class);
         $this->_test_2_Way_conversion('622-3-21', 0, 12, 30);
     }
 

@@ -4,10 +4,11 @@ namespace OpiloTest\Farsi;
 
 use DateTime;
 use Opilo\Farsi\DateConverter;
+use Opilo\Farsi\InvalidDateException;
 use Opilo\Farsi\JDateTime;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class JDateTimeTest extends PHPUnit_Framework_TestCase
+class JDateTimeTest extends TestCase
 {
     public function provideInvalidJDateTime()
     {
@@ -24,12 +25,11 @@ class JDateTimeTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Opilo\Farsi\InvalidDateException
-     *
      * @dataProvider provideInvalidJDateTime
      */
     public function test_invalid_j_date_time($y, $m, $d, $h, $i, $s)
     {
+        $this->expectException(InvalidDateException::class);
         new JDateTime($y, $m, $d, $h, $i, $s);
     }
 

@@ -10,9 +10,9 @@ use Illuminate\Validation\Factory;
 use Opilo\Farsi\JDateTime;
 use Opilo\Farsi\Laravel\JalaliValidator;
 use Opilo\Farsi\JalaliDate;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class FarsiServiceProviderTest extends PHPUnit_Framework_TestCase
+class FarsiServiceProviderTest extends TestCase
 {
     /**
      * @var Factory
@@ -24,7 +24,7 @@ class FarsiServiceProviderTest extends PHPUnit_Framework_TestCase
      */
     private $translator;
 
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
         $this->translator = new Translator(new FileLoader(new Filesystem(), __DIR__ . '/../../src/Laravel/sample-lang'), 'en');

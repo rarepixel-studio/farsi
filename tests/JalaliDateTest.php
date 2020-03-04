@@ -5,9 +5,9 @@ namespace OpiloTest\Farsi;
 use Opilo\Farsi\DateConverter;
 use Opilo\Farsi\JalaliDate;
 use Opilo\Farsi\JDateTime;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class JalaliDateTest extends PHPUnit_Framework_TestCase
+class JalaliDateTest extends TestCase
 {
     public function test_leap_years()
     {

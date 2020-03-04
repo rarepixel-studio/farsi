@@ -5,9 +5,9 @@ namespace OpiloTest\Farsi;
 use Opilo\Farsi\JalaliDate;
 use Opilo\Farsi\JalaliFormatter;
 use Opilo\Farsi\JDateTime;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class JalaliFormatterTest extends PHPUnit_Framework_TestCase
+class JalaliFormatterTest extends TestCase
 {
     public function provideSamples()
     {

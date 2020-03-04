@@ -3,9 +3,9 @@
 namespace OpiloTest\Farsi;
 
 use Opilo\Farsi\MiscHelpers;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class MiscHelpersTest extends PHPUnit_Framework_TestCase
+class MiscHelpersTest extends TestCase
 {
     public function test_search()
     {

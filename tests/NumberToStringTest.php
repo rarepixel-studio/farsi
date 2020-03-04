@@ -3,16 +3,16 @@
 namespace OpiloTest\Farsi;
 
 use Opilo\Farsi\NumberToStringConverter;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class NumberToStringTest extends PHPUnit_Framework_TestCase
+class NumberToStringTest extends TestCase
 {
     /**
      * @var NumberToStringConverter
      */
     private $converter;
 
-    public function setUp()
+    public function setUp() : void
     {
         $this->converter = new NumberToStringConverter();
     }

@@ -5,16 +5,16 @@ namespace OpiloTest\Farsi\Laravel;
 use DateTime;
 use Opilo\Farsi\Laravel\JalaliValidator;
 use Opilo\Farsi\JalaliDate;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class JalaliValidatorTest extends PHPUnit_Framework_TestCase
+class JalaliValidatorTest extends TestCase
 {
     /**
      * @var JalaliValidator
      */
     private $validator;
 
-    public function setUp()
+    public function setUp() : void
     {
         $this->validator = new JalaliValidator();
     }

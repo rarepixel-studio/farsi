@@ -3,16 +3,16 @@
 namespace OpiloTest\Farsi;
 
 use Opilo\Farsi\StringCleaner;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class StringCleanerTest extends PHPUnit_Framework_TestCase
+class StringCleanerTest extends TestCase
 {
     /**
      * @var StringCleaner
      */
     private $cleaner;
 
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
         $this->cleaner = new StringCleaner();

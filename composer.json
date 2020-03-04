@@ -10,17 +10,17 @@
     }
   ],
   "require": {
-    "php": ">=5.4"
+    "php": ">=7.1.0"
   },
   "require-dev": {
-    "illuminate/validation": "^4.2||^5",
-    "illuminate/translation": "^4.2||^5",
-    "illuminate/filesystem": "^4.2||^5",
-    "phpunit/phpunit": "4.*",
+    "illuminate/validation": "~5.7.0|~5.8.0|^6.0|^7.0",
+    "illuminate/translation": "~5.7.0|~5.8.0|^6.0|^7.0",
+    "illuminate/filesystem": "~5.7.0|~5.8.0|^6.0|^7.0",
+    "phpunit/phpunit": "^7.0|^8.0",
     "sallar/jdatetime": "dev-master"
   },
   "suggest": {
-    "laravel/framework": "This package provides validation facilities for the Laravel Framework (^4.2||^5),"
+    "laravel/framework": "This package provides validation facilities for the Laravel Framework"
   },
   "autoload": {
     "psr-4": {
