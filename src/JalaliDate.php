@@ -224,12 +224,13 @@ class JalaliDate extends Date
     /**
      * @param string $format
      * @param string $strDate
+     * @param boolean $includeTime
      *
      * @return static
      */
-    public static function fromFormat($format, $strDate)
+    public static function fromFormat($format, $strDate,$includeTime = false)
     {
-        return JalaliParser::createJalaliFromFormat($format, $strDate);
+        return JalaliParser::createJalaliFromFormat($format, $strDate,$includeTime);
     }
 
     /**
